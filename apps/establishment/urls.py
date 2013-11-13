@@ -1,9 +1,11 @@
-from django.conf.urls import patterns, url
-
+from django.conf.urls import patterns, include, url
+from apps.establishment import views
 
 urlpatterns = patterns('',
 
-                       url(r'^$', 'apps.establishment.views.home'),
+                       url(r'^$', views.index, name='index'),
+                       
+                       url(r'^library/', include('apps.establishment.library.urls')),
 
 
                        )
