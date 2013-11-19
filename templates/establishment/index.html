@@ -1,26 +1,22 @@
-{% load staticfiles %}
-<!DOCTYPE html>
-<html dir="LTR">
-	<head>
-		<title>mJuke - Player</title>
-		
-		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content="mJuke" />
-		
-		<link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css" />
-		<link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/font-awesome/4.0.2/css/font-awesome.min.css" />
-		<link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/file-uploader/3.7.0/fineuploader.min.css" />
-		<link rel="stylesheet" type="text/css" href="{% static "css/panel.css" %}" />
-		
-		<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-		<script type="text/javascript" src="//netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js"></script>
-		<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/file-uploader/3.7.0/fineuploader-jquery.min.js"></script>
-		<script type="text/javascript" src="{% static "js/panel.js" %}"></script>
-	</head>
-	<body>
-		<h1>Welcome to establishment's home page... Yay!!</h1>
-		<a href="../">Click here for users page</a>
-		<a id="library" href="library/">Manage music library</a>
-	</body>
-</html>
+{% extends 'establishment/base.html' %}
+{% block title %} mJuke - Player - Home {% endblock %}
+{% block content %}
+
+    <h1>Welcome to establishment's home page... Yay!!</h1>
+
+    <a href="../">Click here for users page</a>
+
+    <a id="library" href="library/">Manage music library</a>
+
+    {% if user.is_authenticated %}
+
+        <a href="/establishment/accounts/logout/">logout</a>
+        <a href="/establishment/accounts/edit/">Edit account</a>
+
+    {% else %}
+
+        <a href="/establishment/accounts/login/">login</a>
+
+    {% endif %}
+
+{% endblock %}
