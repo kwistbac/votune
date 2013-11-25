@@ -17,20 +17,6 @@ class Account(models.Model):
 
 
 class Song(models.Model):
-<<<<<<< HEAD
-	account = models.ForeignKey(Account)
-	queue = models.SmallIntegerField(null = True)
-	length = models.PositiveSmallIntegerField(null = True)
-	title = models.CharField(max_length = 60)
-	artist = models.CharField(max_length = 60)
-	album = models.CharField(max_length = 60, blank = True)
-	track = models.PositiveSmallIntegerField(null = True, blank = True)
-	year = models.PositiveSmallIntegerField(null = True, blank = True)
-	genre = models.CharField(max_length = 30, blank = True)
-	comment = models.CharField(max_length = 60, blank = True)
-	created = models.DateTimeField(auto_now_add = True)	
-	modified = models.DateTimeField(auto_now = True)
-=======
     account = models.ForeignKey(Account)
     queue = models.SmallIntegerField(null=True)
     length = models.PositiveSmallIntegerField(null=True)
@@ -44,7 +30,6 @@ class Song(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     modified = models.DateTimeField(auto_now=True)
 
->>>>>>> pdm
 
 class Vote(models.Model):
     account = models.ForeignKey(Account)
