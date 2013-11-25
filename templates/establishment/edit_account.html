@@ -1,0 +1,47 @@
+{% extends 'establishment/base.html' %}
+
+{% block title %} Edit account information {% endblock %}
+
+{% block content %}
+    <h2>Change your username</h2>
+    <form action="" method="POST">{% csrf_token %}
+
+        <table>
+            {{usernameEditForm.as_table }}
+        </table>
+
+        <input type="submit" value="Update usernmae" name="username_update"/>
+    </form>
+
+    <h2>Edit your account information</h2>
+    <form action="" method="POST">{% csrf_token %}
+
+        <table>
+            {{accountEditForm.as_table }}
+        </table>
+
+        <input type="submit" value="Update account" name="account_update"/>
+    </form>
+
+    <h2>Edit your other information</h2>
+    <form action="" method="POST">{% csrf_token %}
+
+        <table>
+            {{otherInfoEditForm.as_table }}
+        </table>
+
+        <input type="submit" value="Update info" name="other_info_update"/>
+    </form>
+
+    <h2>Change your password</h2>
+    <form action="" method="POST">{% csrf_token %}
+
+        <table>
+            {{passwordChangeForm.as_table }}
+        </table>
+
+        <input type="submit" value="Change password" name="password_update"/>
+    </form>
+
+
+{% endblock %}

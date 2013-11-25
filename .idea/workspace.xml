@@ -11,6 +11,8 @@
     <file path="/views.py" changelist="70e63830-da63-4922-bfe4-7df874c3f2e9" time="1382728528088" ignored="false" />
     <file path="$PROJECT_DIR$/../Assignment4/myblog/myblog/views.py" changelist="70e63830-da63-4922-bfe4-7df874c3f2e9" time="1382728528328" ignored="false" />
     <file path="/media/pdm/8A6B-C2A9/Python/YAAS/YAAS/settings.py" changelist="70e63830-da63-4922-bfe4-7df874c3f2e9" time="1382731021506" ignored="false" />
+    <file path="$PROJECT_DIR$/static/js/panel.js" changelist="70e63830-da63-4922-bfe4-7df874c3f2e9" time="1385401237568" ignored="false" />
+    <file path="$PROJECT_DIR$/templates/establishment/index.html" changelist="70e63830-da63-4922-bfe4-7df874c3f2e9" time="1385401237568" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -38,7 +40,7 @@
       <file leaf-file-name="urls.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/apps/establishment/urls.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="4" column="0" selection-start="117" selection-end="117" vertical-scroll-proportion="0.0">
+            <state line="9" column="0" selection-start="291" selection-end="291" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -65,7 +67,7 @@
       <file leaf-file-name="views.py" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/apps/establishment/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="8" column="57" selection-start="353" selection-end="353" vertical-scroll-proportion="0.123636365">
+            <state line="91" column="32" selection-start="4187" selection-end="4187" vertical-scroll-proportion="0.3211679">
               <folding />
             </state>
           </provider>
@@ -138,8 +140,8 @@
         <option value="$PROJECT_DIR$/templates/establishment/home.html" />
         <option value="$PROJECT_DIR$/templates/users/home.html" />
         <option value="$PROJECT_DIR$/apps/establishment/urls.py" />
-        <option value="$PROJECT_DIR$/apps/establishment/views.py" />
         <option value="$PROJECT_DIR$/mJuke/settings.py" />
+        <option value="$PROJECT_DIR$/apps/establishment/views.py" />
       </list>
     </option>
   </component>
@@ -611,7 +613,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/apps/establishment/urls.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="4" column="0" selection-start="117" selection-end="117" vertical-scroll-proportion="0.0">
+        <state line="9" column="0" selection-start="291" selection-end="291" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
@@ -671,7 +673,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/apps/establishment/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="8" column="57" selection-start="353" selection-end="353" vertical-scroll-proportion="0.123636365">
+        <state line="91" column="32" selection-start="4187" selection-end="4187" vertical-scroll-proportion="0.3211679">
           <folding />
         </state>
       </provider>

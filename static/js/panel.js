@@ -41,4 +41,5 @@ $(function()
 		          .modal({ remote: $(this).attr('href') });
 		
 	});
+
 });

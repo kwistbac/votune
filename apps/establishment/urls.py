@@ -7,5 +7,10 @@ urlpatterns = patterns('',
                        
                        url(r'^library/', include('apps.establishment.library.urls')),
 
+                       url(r'^accounts/login/$', 'apps.establishment.views.login'),
+
+                       url(r'^accounts/logout/$', 'apps.establishment.views.logout'),
+
+                       url(r'^accounts/edit/$', 'apps.establishment.views.editAccount'),
 
                        )
