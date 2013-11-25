@@ -3,7 +3,7 @@ from mJuke.apps.establishment.library import views
 
 urlpatterns = patterns('',
 
-                       url(r'^$', views.LibraryListView.as_view(), name='library'),
+                       url(r'^$', views.LibraryListView.as_view(), name='library-list'),
 
                        url(r'^add$', views.add, name='library-add'),
 

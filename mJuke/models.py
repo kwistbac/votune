@@ -18,17 +18,17 @@ class Account(models.Model):
 
 class Song(models.Model):
     account = models.ForeignKey(Account)
-    queue = models.SmallIntegerField(null=True)
-    length = models.PositiveSmallIntegerField(null=True)
-    title = models.CharField(max_length=60)
-    artist = models.CharField(max_length=60)
-    album = models.CharField(max_length=60)
-    track = models.PositiveSmallIntegerField(null=True)
-    year = models.PositiveSmallIntegerField(null=True)
-    genre = models.CharField(max_length=30)
-    comment = models.CharField(max_length=60)
-    created = models.DateTimeField(auto_now_add=True)
-    modified = models.DateTimeField(auto_now=True)
+    queue = models.SmallIntegerField(null = True)
+    length = models.PositiveSmallIntegerField(null = True)
+    title = models.CharField(max_length = 60)
+    artist = models.CharField(max_length = 60)
+    album = models.CharField(max_length = 60, blank = True)
+    track = models.PositiveSmallIntegerField(null = True, blank = True)
+    year = models.PositiveSmallIntegerField(null = True, blank = True)
+    genre = models.CharField(max_length = 30, blank = True)
+    comment = models.CharField(max_length = 60, blank = True)
+    created = models.DateTimeField(auto_now_add = True) 
+    modified = models.DateTimeField(auto_now = True)
 
 
 class Vote(models.Model):

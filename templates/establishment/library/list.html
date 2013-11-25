@@ -1,41 +1,41 @@
-<div class="modal-dialog">
-	<div class="modal-content">
-		<div class="modal-header">
-			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-			<h4 class="modal-title">Music library</h4>
-		</div>
-		<div class="modal-body">
-			<table class="table table-condensed">
-				<thead>
-					<tr>
-						<th>Title</th>
-						<th>Artist</th>
-						<th style="text-align:right;width:80px;">
-							<a id="libraryAdd" href="library/add" class="btn btn-sm btn-success"><i class="fa-plus"></i> Add</a>
-						</th>
-					</tr>
-				</thead>
-				<tbody>
-				{% for song in object_list %}
-					<tr>
-						<td>
-							<a id="libraryEdit" href="library/edit/{{ song.id }}">{{ song.title }}</a>
-						</td>
-						<td>{{ song.artist }}</td>
-						<td style="text-align:right;">
-							<a id="libraryRemove" href="library/remove/{{ song.id }}" class="btn btn-xs btn-danger" ><i class="fa-minus"></i></a>
-						</td>
-					</tr>
-				{% empty %}
-					<tr>
-						<td colspan="3">No songs found</td>
-					</tr>
-				{% endfor %}
-				</tbody>
-			</table>		
-		</div>
-		<div class="modal-footer">
-			<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-		</div>
-	</div>
+<div class="modal-dialog" data-url="{% url 'library-list' %}">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h4 class="modal-title">Music library</h4>
+        </div>
+        <div class="modal-body">
+            <table class="table table-condensed">
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Artist</th>
+                        <th style="text-align:right;width:80px;">
+                            <a id="libraryAdd" href="{% url 'library-add' %}" class="btn btn-sm btn-success"><i class="fa-plus"></i> Add</a>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for song in object_list %}
+                    <tr>
+                        <td>
+                            <a id="libraryEdit" href="{% url 'library-edit' song.id %}">{{ song.title }}</a>
+                        </td>
+                        <td>{{ song.artist }}</td>
+                        <td style="text-align:right;">
+                            <a id="libraryRemove" href="{% url 'library-remove' song.id %}" class="btn btn-xs btn-danger" ><i class="fa-minus"></i></a>
+                        </td>
+                    </tr>
+                {% empty %}
+                    <tr>
+                        <td colspan="3">No songs found</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>		
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+    </div>
 </div>
