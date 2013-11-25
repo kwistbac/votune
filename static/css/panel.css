@@ -16,3 +16,33 @@ i[class^="fa-"] { font-style:normal; }
 #uploader .qq-upload-button { display:inline-block; width:auto; padding:10px 20px; }
 #uploader .qq-upload-list li { margin-top:3px; }
 #uploader .qq-upload-drop-area span { margin-top:-11px; }
+
+html{
+    background:silver;
+}
+header {
+    background: orange;
+    height: 12em;
+    padding: 10px;
+    border-bottom: 1px solid gray;
+}
+
+#logo {
+width: 10em;
+height: 10em;
+background: red;
+text-align: center;    
+}
+#user-profile{
+
+}
+
+#content-area{
+margin-left: 0px;
+background: #ecf0f1;  
+padding-top:20px;
+}
+
+footer{
+    color:white;
+}

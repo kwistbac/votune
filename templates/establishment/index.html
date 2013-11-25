@@ -2,21 +2,73 @@
 {% block title %} mJuke - Player - Home {% endblock %}
 {% block content %}
 
-    <h1>Welcome to establishment's home page... Yay!!</h1>
+    <header>
+        <div id ="logo" class="pull-left clearfix">Logo</div>
+        <div id = "user-profile" class="pull-right">
+            {% if user.is_authenticated %}
 
-    <a href="../">Click here for users page</a>
+            <a href="/establishment/accounts/logout/">logout</a>
+            <a href="/establishment/accounts/edit/">Edit account</a>
 
-    <a id="library" href="library/">Manage music library</a>
+            {% else %}
 
-    {% if user.is_authenticated %}
+            <a href="/establishment/accounts/login/">login</a>
 
-        <a href="/establishment/accounts/logout/">logout</a>
-        <a href="/establishment/accounts/edit/">Edit account</a>
-
-    {% else %}
-
-        <a href="/establishment/accounts/login/">login</a>
-
-    {% endif %}
+            {% endif %}
+            <button type="button" class="btn btn-active disabled">
+                <span class="glyphicon glyphicon-user"></span>
+            </button>
+            <button type="button" class="btn btn-active">
+                <span class="glyphicon glyphicon-chevron-down"></span>
+            </button>
+        </div>
+    </header>
+    <div id="content-area" class="row">
+        <section id="music-manager" class="col-sm-4">
+            <h2>Manage Here</h2>
+            <ul class="list-group">
+                <li class="list-group-item"><a id="library" href="library/"><span class="glyphicon glyphicon-plus"></span> Manage Music</a></li>
+                <li class="list-group-item"><a href="#"><span class="glyphicon glyphicon-plus"></span> Manage QR Code</a></li>
+                <li class="list-group-item"><a href="#"><span class="glyphicon glyphicon-plus"></span> Billing Report</a></li>
+                <li class="list-group-item"><a href="#"><span class="glyphicon glyphicon-plus"></span> Statistics Overview</a></li>
+            </ul>
+        </section>
+        <section id ="playlist" class="col-sm-4">
+            <h2>Playlist</h2>
+            <div style="margin-bottom: 5px;">
+                <audio style="width: 100%;" src="audio.mp3" controls preload></audio>
+            </div>
+            <div class="list-group">
+                <a href="#" class="list-group-item active">Sample Song A, Artist A, Album A</a>
+                <a href="#" class="list-group-item">Sample Song B, Artist B, Album B</a>
+                <a href="#" class="list-group-item">Sample Song C, Artist C, Album C</a>
+                <a href="#" class="list-group-item">Sample Song D, Artist D, Album D</a>
+                <a href="#" class="list-group-item">Sample Song E, Artist E, Album E</a>
+            </div>
+        </section>
+        <section id ="stats" class="col-sm-4">
+            <h2>Stats Snaps</h2>
+            <div>
+                <img src="#">
+            </div>
+        </section>
+    </div>
+    <div style="background:#666;padding-top: 20px;">
+        <footer>
+            <div class="row">
+                <section class="col-sm-4">
+                    <p style="margin-left:20px;">Footer Section 1</p>
+                </section>
+                <section class="col-sm-4">
+                    <p>Footer Section 2</p>
+                </section>
+                <section class="col-sm-4">
+                    <p>Footer Section 3</p>
+                </section>
+            </div>
+        </footer>
+    </div>  
+    <!-- Audio player plugin-->
+    <script src="http://api.html5media.info/1.1.6/html5media.min.js"></script>
 
 {% endblock %}
