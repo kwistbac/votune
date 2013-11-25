@@ -1,4 +1,5 @@
 manage.py/
+.idea/
 .kdev4/
 mJuke.kdev4
 *.pyc
