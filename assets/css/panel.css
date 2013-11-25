@@ -1,0 +1,9 @@
+@media screen and (min-width: 768px)
+{
+	#libraryModal .modal-dialog { width: 800px; }
+}
+[class^="fa-"]:before, 
+[class*=" fa-"]:before { font-family:FontAwesome!important; }
+
+i[class^="fa-"],
+i[class^="fa-"] { font-style:normal; }

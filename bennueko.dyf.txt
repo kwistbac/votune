@@ -1,0 +1,31 @@
+﻿First commit to new branch
+
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+# On branch NewBranch
+# Changes to be committed:
+#   (use "git reset HEAD <file>..." to unstage)
+#
+#	modified:   .idea/dataSources.xml
+#	modified:   .idea/mJuke.iml
+#	modified:   .idea/misc.xml
+#	modified:   .idea/workspace.xml
+#	modified:   apps/establishment/urls.py
+#	modified:   apps/establishment/views.py
+#	modified:   assets/js/panel.js
+#	modified:   mJuke/models.py
+#	modified:   mJuke/settings.py
+#	modified:   static/js/panel.js
+#	modified:   templates/establishment/index.html
+#
+# Untracked files:
+#   (use "git add <file>..." to include in what will be committed)
+#
+#	apps/establishment/admin.py
+#	apps/establishment/forms.py
+#	assets/css/
+#	templates/establishment/accounts/
+#	templates/establishment/base.html
+#	templates/establishment/edit_account.html
+#	templates/establishment/login.html
+

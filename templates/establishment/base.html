@@ -1,0 +1,66 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html dir="LTR">
+<head>
+    <title>{% block title %}{% endblock %}</title>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="viewport" content="width=device-width"/>
+    <meta name="generator" content="mJuke"/>
+
+    <link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css"
+          href="//netdna.bootstrapcdn.com/font-awesome/4.0.2/css/font-awesome.min.css"/>
+    <link rel="stylesheet" type="text/css"
+          href="//cdnjs.cloudflare.com/ajax/libs/file-uploader/3.7.0/fineuploader.min.css"/>
+    <link rel="stylesheet" type="text/css" href="{% static "css/panel.css" %}"/>
+
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script type="text/javascript" src="//netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js"></script>
+    <script type="text/javascript"
+            src="//cdnjs.cloudflare.com/ajax/libs/file-uploader/3.7.0/fineuploader-jquery.min.js"></script>
+    <script type="text/javascript" src="{% static "assets/js/panel.js" %}"></script>
+
+<style type="text/css">
+    ul.messages li {
+        list-style-type: none;
+    }
+    ul.messages li.info {
+        color: #ffffff;
+        background-color: green;
+        display: inline-block;
+    }
+    ul.messages li.error {
+        color: #ffffff;
+        background-color: red;
+        display: inline-block;
+    }
+    ul.errorlist li {
+        color: red;
+    }
+</style>
+
+<script type="text/javascript">
+$(document).ready(function(){
+$('ul.messages').fadeOut(1000);
+});
+</script>
+
+</head>
+<body>
+
+
+{% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+{% endif %}
+
+{% block content %}
+
+{% endblock %}
+
+</body>
+</html>
