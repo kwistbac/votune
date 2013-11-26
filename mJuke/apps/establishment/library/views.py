@@ -69,8 +69,8 @@ def add(request):
                         artist=audio.tags['TPE1'].text[0] if 'TPE1' in audio.tags and audio.tags['TPE1'].text[0] else "Uknown artist",
                         length=audio.info.length,
                         album=audio.tags['TALB'].text[0] if 'TALB' in audio.tags else "",
-                        track=audio.tags['TRCK'].text[0] if 'TRCK' in audio.tags else "",
-                        year=audio.tags['TDRC'].text[0].get_text() if 'TDRC' in audio.tags else "",
+                        track=audio.tags['TRCK'].text[0] if 'TRCK' in audio.tags else None,
+                        year=audio.tags['TDRC'].text[0].get_text() if 'TDRC' in audio.tags else None,
                         genre=audio.tags['TCON'].text[0] if 'TCON' in audio.tags else "",
                         comment=audio.tags['COMM'].text[0] if 'COMM' in audio.tags else "")
             song.save();
