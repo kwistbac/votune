@@ -21,33 +21,56 @@
             src="//cdnjs.cloudflare.com/ajax/libs/file-uploader/3.7.0/fineuploader-jquery.min.js"></script>
     <script type="text/javascript" src="{% static "js/panel.js" %}"></script>
 
-<style type="text/css">
-    ul.messages li {
-        list-style-type: none;
-    }
-    ul.messages li.info {
-        color: #ffffff;
-        background-color: green;
-        display: inline-block;
-    }
-    ul.messages li.error {
-        color: #ffffff;
-        background-color: red;
-        display: inline-block;
-    }
-    ul.errorlist li {
-        color: red;
-    }
-</style>
+    <style type="text/css">
+        ul.messages li {
+            list-style-type: none;
+        }
 
-<script type="text/javascript">
-$(document).ready(function(){
-$('ul.messages').fadeOut(1000);
-});
-</script>
+        ul.messages li.info {
+            color: #ffffff;
+            background-color: green;
+            display: inline-block;
+        }
+
+        ul.messages li.error {
+            color: #ffffff;
+            background-color: red;
+            display: inline-block;
+        }
+
+        ul.errorlist li {
+            color: red;
+        }
+    </style>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('ul.messages').fadeOut(2000);
+
+            $('#mJukeList').html('Loading playlist..');
+
+            var refreshInterval = 3000;
+            setInterval(function () {
+                loadPlayList();
+            }, refreshInterval);
+
+
+            function loadPlayList() {
+                $('#mJukeList').load('playlist', function (response, status, xhr) {
+                    if (status == "error") {
+                        $('#mJukeList').html('error on loading playlist');
+                    }
+                });
+            }
+
+        });
+    </script>
 
 </head>
 <body>
+<div id="test-test">
+
+</div>
 
 
 {% if messages %}
@@ -57,6 +80,29 @@ $('ul.messages').fadeOut(1000);
         {% endfor %}
     </ul>
 {% endif %}
+
+<header>
+    <div id="logo" class="pull-left clearfix">Logo</div>
+    <div id="user-profile" class="pull-right">
+        {% if user.is_authenticated %}
+
+            <a href="/accounts/logout/">logout</a>
+            <a href="/accounts/edit/">Edit account</a>
+
+        {% else %}
+
+            <a href="/accounts/login/">login</a>
+
+        {% endif %}
+        <button type="button" class="btn btn-active disabled">
+            <span class="glyphicon glyphicon-user"></span>
+        </button>
+        <button type="button" class="btn btn-active">
+            <span class="glyphicon glyphicon-chevron-down"></span>
+        </button>
+    </div>
+</header>
+
 
 {% block content %}
 

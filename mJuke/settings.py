@@ -13,10 +13,10 @@ MANAGERS = ADMINS
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': 'mJuke', # Or path to database file if using sqlite3.
+        'NAME': 'mjuke', # Or path to database file if using sqlite3.
         # The following settings are not used with sqlite3:
-        'USER': 'mJuke',
-        'PASSWORD': 'mJuke',
+        'USER': 'root',
+        'PASSWORD': '',
         'HOST': '127.0.0.1', # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
         'PORT': '', # Set to empty string for default.
     }
@@ -75,7 +75,7 @@ STATICFILES_DIRS = (
     # Put strings here, like "/home/html/static" or "C:/www/django/static".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
-    ('assets', (os.path.join(os.path.dirname(__file__), "../static"))),
+    (os.path.join(os.path.dirname(__file__), "../static")),
 )
 
 # List of finder classes that know how to find static files in
@@ -128,6 +128,7 @@ INSTALLED_APPS = (
     'mJuke.apps.users',
     'mJuke.apps.establishment',
     'mJuke.apps.establishment.library',
+    'mJuke.apps.establishment.playlist',
     
 )
 

@@ -4,7 +4,7 @@
 
 {% block content %}
     <h2>Change your username</h2>
-    <form action="" method="POST">{% csrf_token %}
+    <form action="" method="POST" role="form">{% csrf_token %}
 
         <table>
             {{usernameEditForm.as_table }}

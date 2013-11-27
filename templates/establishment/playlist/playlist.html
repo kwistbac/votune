@@ -1,0 +1,13 @@
+{% if curSong  %}
+     <a href="#" class="list-group-item active">{{ curSong.title }}, {{ curSong.artist }}</a>
+{% endif %}
+
+{% if songs > 0 %}
+    {% for song in songs %}
+             <a href="#" class="list-group-item">{{ song.title }}, {{ song.artist }}</a>
+    {% endfor %}
+{% else %}
+    <span>Playlist is empty</span>
+{% endif %}
+
+

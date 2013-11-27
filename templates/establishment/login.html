@@ -4,20 +4,30 @@
 
 {% block content %}
 
-    <h2>Login form</h2>
-    <p><b>{{ error }}</b></p>
-    {% if form.errors %}
-        <p> Password or username is incorrect </p>
-    {% endif %}
-    <form action="" method="post">
-        {% csrf_token %}
-        <label for="username">Username :</label>
-        <input type="text" name="username" value="" id="username">
-        <label for="password">Password :</label>
-        <input type="password" name="password" value="" id="password">
-        <input type="hidden" name="next" value="loginpage">
-        <input type="submit" value="Submit">
 
-    </form>
+    <div class="container" style="max-width: 400px; min-height: 300px">
+        <h2>Login form</h2>
+
+        <p><b>{{ error }}</b></p>
+        {% if form.errors %}
+            <p> Password or username is incorrect </p>
+        {% endif %}
+        <form role="form" action="" method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" name="username" value="" id="username" class="form-control"
+                       placeholder="Enter username">
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" name="password" value="" id="password" class="form-control"
+                       placeholder="Password">
+            </div>
+            <input type="hidden" name="next" value="loginpage">
+            <button type="submit" class="btn btn-default">Submit</button>
+        </form>
+
+    </div>
 
 {% endblock %}

@@ -11,14 +11,14 @@ from django.contrib import auth
 import MySQLdb
 from mJuke.models import Account
 
-
+@login_required
 def index(request):
     return render_to_response('establishment/index.html', context_instance=RequestContext(request))
 
 
 def login(request):
     if request.user.is_authenticated():
-        return HttpResponseRedirect('../../')
+        return HttpResponseRedirect('/establishment')
 
     if request.method == 'POST':
         username = request.POST.get('username', '')
@@ -42,7 +42,7 @@ def login(request):
 @login_required
 def logout(request):
     auth.logout(request)
-    return HttpResponseRedirect('../../')
+    return HttpResponseRedirect('/establishment')
 
 
 @login_required
@@ -61,7 +61,7 @@ def editAccount(request):
             accountEditForm.email = MySQLdb.escape_string(request.POST['email'])
             accountEditForm.save()
             messages.add_message(request, messages.INFO, 'Account was successfully updated.')
-            return HttpResponseRedirect('../../')
+            return HttpResponseRedirect('/establishment')
 
     elif request.method == 'POST' and 'username_update' in request.POST:
         usernameEditForm = UserNameEditForm(request.POST, instance=request.user)
@@ -69,7 +69,7 @@ def editAccount(request):
             usernameEditForm.username = MySQLdb.escape_string(request.POST['username'])
             usernameEditForm.save()
             messages.add_message(request, messages.INFO, 'Username was successfully updated.')
-            return HttpResponseRedirect('../../')
+            return HttpResponseRedirect('/establishment')
 
     elif request.method == 'POST' and 'other_info_update' in request.POST:
         otherInfoEditForm = OtherInfoEditForm(request.POST, instance=usrAccount)
@@ -80,7 +80,7 @@ def editAccount(request):
             otherInfoEditForm.phone = MySQLdb.escape_string(request.POST['phone'])
             otherInfoEditForm.save()
             messages.add_message(request, messages.INFO, 'Username was successfully updated.')
-            return HttpResponseRedirect('../../')
+            return HttpResponseRedirect('/establishment')
 
     elif request.method == 'POST' and 'password_update' in request.POST:
         password1 = request.POST.get('password', '')
@@ -97,7 +97,7 @@ def editAccount(request):
             u.set_password(password1)
             u.save()
             messages.add_message(request, messages.INFO, 'Password successfully updated')
-            return HttpResponseRedirect('../../')
+            return HttpResponseRedirect('/establishment')
 
     return render_to_response('establishment/edit_account.html',
                               {

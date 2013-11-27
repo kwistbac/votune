@@ -1,0 +1,48 @@
+@media screen and (min-width: 768px)
+{
+    #libraryModal .modal-dialog { width: 600px; }
+    #libraryAddModal .modal-dialog { width: 550px; }
+    #libraryEditModal .modal-dialog { width: 475px; }
+    #libraryRemoveModal .modal-dialog { width: 450px; }
+}
+[class^="fa-"]:before, 
+[class*=" fa-"]:before { font-family:FontAwesome!important; }
+
+i[class^="fa-"],
+i[class^="fa-"] { font-style:normal; }
+
+#uploader { display:inline-block; text-align:center; width:100%; }
+#uploader * { border-radius:3px; }
+#uploader .qq-upload-button { display:inline-block; width:auto; padding:10px 20px; }
+#uploader .qq-upload-list li { margin-top:3px; }
+#uploader .qq-upload-drop-area span { margin-top:-11px; }
+
+html{
+    background:silver;
+}
+header {
+    background: orange;
+    height: 12em;
+    padding: 10px;
+    border-bottom: 1px solid gray;
+}
+
+#logo {
+width: 10em;
+height: 10em;
+background: red;
+text-align: center;    
+}
+#user-profile{
+
+}
+
+#content-area{
+margin-left: 0px;
+background: #ecf0f1;  
+padding-top:20px;
+}
+
+footer{
+    color:white;
+}
