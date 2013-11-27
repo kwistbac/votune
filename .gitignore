@@ -1,5 +1,6 @@
-assets/*
-manage.py/
+/css
+/js
+/manage.py
 .idea/
 .kdev4/
 mJuke.kdev4
