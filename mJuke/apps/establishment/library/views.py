@@ -35,6 +35,9 @@ class LibraryListView(ListView):
                     os.makedirs(path)
         return super(LibraryListView, self).render_to_response(context, **kwargs)
 
+    def get_queryset(self):
+        return Song.objects.filter(account=self.request.user)
+
     def get_context_data(self, **kwargs):
         context = super(LibraryListView, self).get_context_data(**kwargs)
         context['now'] = timezone.now()
