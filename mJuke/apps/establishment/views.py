@@ -10,6 +10,9 @@ from django.core.context_processors import csrf
 from django.contrib import auth
 import MySQLdb
 from mJuke.models import Account
+import qrcode
+from PIL import Image
+
 
 @login_required
 def index(request):

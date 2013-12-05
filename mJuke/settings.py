@@ -122,14 +122,16 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
-    
+
     # apps
     'mJuke.apps',
     'mJuke.apps.users',
     'mJuke.apps.establishment',
     'mJuke.apps.establishment.library',
     'mJuke.apps.establishment.playlist',
-    
+    'mJuke.apps.establishment.qr',
+    'bootstrap3_datetime',
+
 )
 
 

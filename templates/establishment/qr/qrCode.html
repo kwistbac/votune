@@ -1,0 +1,36 @@
+{% extends 'establishment/base.html' %}
+
+{% block title %} QR code management {% endblock %}
+
+{% block content %}
+    <div class="container" style="max-width: 400px; min-height: 300px">
+
+        {% if userHasCode %}
+            <h2>Previous QR code</h2>
+            <img src="../../media/qrCodes/{{ user.id }}_qr_code.jpg">
+        {% endif %}
+          <h2>Create new QR Code</h2>
+        <form method="post" role="form" class="form-horizontal">
+            {% for field in form.visible_fields %}
+                <div id="div_{{ field.html_name }}"
+                     class="form-group{% if field.errors %} has-error{% endif %}">
+                    {{ field.label_tag }}
+                    {{ field }}
+                    <div class="text-muted pull-right">
+                        <small>{{ field.help_text }}</small>
+                    </div>
+                    <div class="help-block">
+                        {{ field.errors }}
+                    </div>
+                </div>
+            {% endfor %}
+            {% for hidden in form.hidden_fields %}
+                {{ hidden }}
+            {% endfor %}
+            {% csrf_token %}
+            <div class="form-group">
+                <input type="submit" value="Submit" name="qrCode_submit" class="btn btn-primary"/>
+            </div>
+        </form>
+    </div>
+{% endblock %}

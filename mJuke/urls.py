@@ -2,6 +2,8 @@ from django.conf.urls import patterns, include, url
 
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
+from mJuke import settings
+
 admin.autodiscover()
 from mJuke.apps.establishment import views
 
@@ -21,4 +23,7 @@ urlpatterns = patterns('',
 
                        url(r'^accounts/edit/', views.editAccount),
 
-                       )
+                       url(r'^media/(?P<path>.*)$', 'django.views.static.serve',
+                           {'document_root': settings.MEDIA_ROOT}),
+
+)
