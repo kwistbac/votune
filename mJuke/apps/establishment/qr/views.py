@@ -53,6 +53,7 @@ def qrCode(request):
 
     if QrCode.objects.filter(account=request.user).exists():
         userHasQrCode = True
+        userQR = QrCode.objects.filter(account=request.user)
 
     if request.method == 'POST' and 'qrCode_submit' in request.POST:
         form = qrCodeCreationForm(request.POST)
@@ -74,7 +75,7 @@ def qrCode(request):
             qr = qrcode.QRCode(
                 version=1,
                 error_correction=qrcode.constants.ERROR_CORRECT_L,
-                box_size=10,
+                box_size=5,
                 border=4,
             )
             qr.add_data("http://127.0.0.1:8000/" + hasCode)
@@ -86,5 +87,6 @@ def qrCode(request):
             return HttpResponseRedirect("")
     return render_to_response("establishment/qr/qrCode.html",
                               {'form': form,
-                               'userHasCode': userHasQrCode},
+                               'userHasCode': userHasQrCode,
+                               'usrQr': userQR},
                               context_instance=RequestContext(request))

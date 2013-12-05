@@ -6,8 +6,12 @@
     <div class="container" style="max-width: 400px; min-height: 300px">
 
         {% if userHasCode %}
-            <h2>Previous QR code</h2>
+            {% for usrQrCode in usrQr %}
+            <b>Previous QR code</b><br/>
+             <span>Expire date/time: {{ usrQrCode.expiredOn }}</span><br/>
+             <span>Url: http://127.0.0.1:8000/{{ usrQrCode.hasCode}}</span>
             <img src="../../media/qrCodes/{{ user.id }}_qr_code.jpg">
+            {% endfor %}
         {% endif %}
           <h2>Create new QR Code</h2>
         <form method="post" role="form" class="form-horizontal">
