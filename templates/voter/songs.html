@@ -1,0 +1,26 @@
+{% extends 'voter/base.html' %}
+{% block title %} mJuke - Voter - Songs {% endblock %}
+{% block content %}
+
+    <div id="content-area"class="row">
+        <section id="music-manager" class="col-sm-4">
+          <ul class="list-group">
+            <li class="list-group-item" style="background:#3498db; color:white; text-align:center;">Result</li>
+
+            {% if songlist %}
+                {% for song in songlist %}
+                    <li class="list-group-item"><span class="glyphicon glyphicon-circle-arrow-right">
+                        </span>&nbsp;{{ song.artist }} - {{ song.title }} <span class="badge">{{ song.queue }}</span><br/>
+                        <a href="/voter/upvote/{{song.id}}"><button type="button" class="btn btn-success btn-style"><span class="glyphicon glyphicon-arrow-up"></span></button></a>
+                        <a href="/voter/downvote/{{song.id}}"><button type="button" class="btn btn-danger btn-style "><span class="glyphicon glyphicon-arrow-down"></span></button></a>
+                    </li>
+                {% endfor %}
+            {% else %}
+                <li class="list-group-item">&nbsp; No songs found </li>
+            {% endif %}
+
+         </ul>
+        </section>
+    </div>
+
+{% endblock %}

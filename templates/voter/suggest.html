@@ -1,0 +1,31 @@
+{% extends 'voter/base.html' %}
+{% block title %} mJuke - Voter - suggest {% endblock %}
+{% block content %}
+
+    <form method="post">
+        {% csrf_token %}
+    <div class="col-lg-3">
+    <div class="well">
+
+      <div class="form-group row">
+          <label for="city" class="col-lg-2 control-label">Title</label>
+          <div class="col-lg-10">
+              <input type="text" class="form-control" id="title" />
+          </div>
+      </div>
+
+      <div class="form-group row">
+          <label for="city" class="col-lg-2 control-label">Artist</label>
+          <div class="col-lg-10">
+              <input type="text" class="form-control" id="artist" />
+          </div>
+      </div>
+
+       <div class="form-group row">
+           <button type="submit" class="btn btn-default">Suggest</button>
+      </div>
+    </div>
+</div>
+</form>
+
+{% endblock %}
