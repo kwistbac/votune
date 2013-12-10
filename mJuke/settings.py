@@ -130,7 +130,9 @@ INSTALLED_APPS = (
     'mJuke.apps.establishment',
     'mJuke.apps.establishment.library',
     'mJuke.apps.establishment.player',
-    
+    'mJuke.apps.establishment.qr',
+    'bootstrap3_datetime',
+
 )
 
 

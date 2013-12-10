@@ -21,37 +21,40 @@
 </head>
 <body>
 
-    {% if messages %}
+{% if messages %}
     <ul class="messages">
         {% for message in messages %}
             <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
         {% endfor %}
     </ul>
-    {% endif %}
+{% endif %}
 
-    <header>
-        <div id="logo" class="pull-left clearfix">Logo</div>
-        <div id="user-profile" class="pull-right">
-            {% if user.is_authenticated %}
+<header>
+    <div id="logo" class="pull-left clearfix">Logo</div>
+    <div id="user-profile" class="pull-right">
+        {% if user.is_authenticated %}
 
-                <a href="/accounts/logout/">logout</a>
-                <a href="/accounts/edit/">Edit account</a>
+            <a href="/accounts/logout/">logout</a>
+            <a href="/accounts/edit/">Edit account</a>
 
-            {% else %}
+        {% else %}
 
-                <a href="/accounts/login/">login</a>
+            <a href="/accounts/login/">login</a>
 
-            {% endif %}
-            <button type="button" class="btn btn-active disabled">
-                <span class="glyphicon glyphicon-user"></span>
-            </button>
-            <button type="button" class="btn btn-active">
-                <span class="glyphicon glyphicon-chevron-down"></span>
-            </button>
-        </div>
-    </header>
+        {% endif %}
+        <button type="button" class="btn btn-active disabled">
+            <span class="glyphicon glyphicon-user"></span>
+        </button>
+        <button type="button" class="btn btn-active">
+            <span class="glyphicon glyphicon-chevron-down"></span>
+        </button>
+    </div>
+</header>
 
-    {% block content %}{% endblock %}
+
+{% block content %}
+
+{% endblock %}
 
 </body>
 </html>

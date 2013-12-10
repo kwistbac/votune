@@ -1,0 +1,33 @@
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h4 class="modal-title">QR Code</h4>
+        </div>
+        <div class="modal-body">
+            <form method="post" class="form-horizontal">{% csrf_token %}
+                {% for field in form.visible_fields %}
+                    <div id="div_{{ field.html_name }}"
+                         class="form-group{% if field.errors %} has-error{% endif %}">
+                        {{ field.label_tag }}
+                        {{ field }}
+                        <div class="text-muted pull-right">
+                            <small>{{ field.help_text }}</small>
+                        </div>
+                        <div class="help-block">
+                            {{ field.errors }}
+                        </div>
+                    </div>
+                {% endfor %}
+                {% for hidden in form.hidden_fields %}
+                    {{ hidden }}
+                {% endfor %}
+            </form>
+
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn" data-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-default" id="libraryAddSave">Save</button>
+        </div>
+    </div>
+</div>

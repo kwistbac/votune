@@ -1,7 +1,9 @@
 from django import forms
 from django.contrib.auth.models import User
 from mJuke.models import Account
+from mJuke.apps.establishment.qr.models import QrCode
 from django.contrib.auth.forms import UserCreationForm
+from bootstrap3_datetime.widgets import DateTimePicker
 
 
 class AccountEditForm(forms.ModelForm):
