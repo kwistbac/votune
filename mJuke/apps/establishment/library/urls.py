@@ -1,9 +1,10 @@
 from django.conf.urls import patterns, url
 from mJuke.apps.establishment.library import views
+from django.contrib.auth.decorators import login_required
 
 urlpatterns = patterns('',
 
-                       url(r'^$', views.LibraryListView.as_view(), name='library-list'),
+                       url(r'^$', login_required(views.LibraryListView.as_view()), name='library-list'),
 
                        url(r'^add$', views.add, name='library-add'),
 

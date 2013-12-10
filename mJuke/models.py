@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-from django.db.models.signals import post_save
+#from django.db.models.signals import post_save
 
 
 class Account(models.Model):
@@ -18,7 +18,8 @@ class Account(models.Model):
 
 class Song(models.Model):
     account = models.ForeignKey(Account)
-    queue = models.SmallIntegerField(null=True)
+    checksum = models.CharField(max_length=32)
+    queue = models.SmallIntegerField(null=True, blank=True)
     length = models.PositiveSmallIntegerField(null=True)
     title = models.CharField(max_length=60)
     artist = models.CharField(max_length=60)
@@ -29,7 +30,9 @@ class Song(models.Model):
     comment = models.CharField(max_length=60, blank=True)
     created = models.DateTimeField(auto_now_add=True)
     modified = models.DateTimeField(auto_now=True)
-
+    
+    class Meta:
+        unique_together = ("account", "checksum")
 
 class Vote(models.Model):
     account = models.ForeignKey(Account)

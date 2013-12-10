@@ -1,5 +1,75 @@
 $(function()
 {
+    $('ul.messages').fadeOut(2000);
+    
+    function updatePlayerQueue(data)
+    {
+        var queue = $('#queue');
+        
+        queue.data('ts', new Date().getTime()).empty();
+        $.each(data.queue, function(index, song) 
+        {
+            var item = $('<li>').addClass('list-group-item');
+            $('<span>').html(song.title + ' - ' + song.artist)
+                       .appendTo(item);
+            $('<span>').attr('title', 'Number of votes')
+                       .addClass('badge')
+                       .html((song.queue < 0) ? 'Random' : song.queue + ' ' + (song.queue > 1) ? 'votes' : 'vote')
+                       .appendTo(item);
+            queue.append(item)
+        });
+        
+        return true;
+    }
+    
+    function updatePlayerSong(data)
+    {
+        if(!data.current)
+            return false;
+        
+        var player = $('#player').get(0);
+        player.src = data.current.url;
+        player.play();
+        
+        $('#songTitle').html(data.current.title);
+        $('#songArtist').html(data.current.artist);
+        $('#songAlbum').html(data.current.album);
+        if(data.current.image)
+        {
+            var img = $('<img>').attr('src', data.current.image);
+            $('#songImage').empty().append(img);
+        }
+        else
+        {
+            var icon = $('<span>').addClass('glyphicon glyphicon-music');
+            $('#playerImage').empty().append(icon);
+        }
+        
+        return updatePlayerQueue(data);
+    }
+    
+    function updatePlayer() 
+    {
+        var player = $('#player').get(0);
+        var queue = $('#queue');
+        var ts = new Date().getTime();
+        
+        if(!player.currentSrc)
+        {
+            $.getJSON("player/queue", updatePlayerSong);
+        }
+        else if(player.currentTime >= player.duration - 1 || player.ended)
+        {
+            $.getJSON("player/next", updatePlayerSong);
+        }
+        else if(!queue.data('ts') || queue.data('ts') + 5000 < ts)
+        {
+            $.getJSON("player/queue", updatePlayerQueue);
+        }
+    }    
+    updatePlayer();
+    setInterval(updatePlayer, 1000);
+    
     $(document).on('submit', ".modal form", function(e)
     {
         e.preventDefault();

@@ -11,38 +11,29 @@
 i[class^="fa-"],
 i[class^="fa-"] { font-style:normal; }
 
+html { background:silver; }
+header { background: orange; height: 12em; padding: 10px; border-bottom: 1px solid gray; }
+footer { color:white; }
+
+ul.messages li { list-style-type: none; }
+ul.messages li.info { color: #ffffff; background-color: green; display: inline-block; }
+ul.messages li.error { color: #ffffff; background-color: red; display: inline-block; }
+ul.errorlist li { color: red; }
+
+#logo { width: 10em; height: 10em; background: red; text-align: center; }
+#content-area { margin-left: 0px; background: #ecf0f1; padding-top:20px; }
+
+.song { border-radius:3px; background:#fff; border: 1px solid #ddd; margin:0 0 10px 0; }
+.song .details { padding:7px; }
+.song .details .row { padding:2px 0; }
+
+#songImage img { max-width:100%; padding: 15px 0; }
+#songImage span { line-height: 85px; font-size: 3em; margin: 0 auto; display:block; }
+
+#player { width:100%; }
+
 #uploader { display:inline-block; text-align:center; width:100%; }
 #uploader * { border-radius:3px; }
 #uploader .qq-upload-button { display:inline-block; width:auto; padding:10px 20px; }
 #uploader .qq-upload-list li { margin-top:3px; }
 #uploader .qq-upload-drop-area span { margin-top:-11px; }
-
-html{
-    background:silver;
-}
-header {
-    background: orange;
-    height: 12em;
-    padding: 10px;
-    border-bottom: 1px solid gray;
-}
-
-#logo {
-width: 10em;
-height: 10em;
-background: red;
-text-align: center;    
-}
-#user-profile{
-
-}
-
-#content-area{
-margin-left: 0px;
-background: #ecf0f1;  
-padding-top:20px;
-}
-
-footer{
-    color:white;
-}

@@ -2,7 +2,6 @@
 {% block title %} mJuke - Player - Home {% endblock %}
 {% block content %}
 
-
     <div id="content-area" class="row">
         <section id="music-manager" class="col-sm-4">
             <h2>Manage Here</h2>
@@ -17,16 +16,30 @@
                     Overview</a></li>
             </ul>
         </section>
-        <section id="playlist" class="col-sm-4">
+        <section class="col-sm-4">
             <h2>Playlist</h2>
-
+            <div class="row song">
+                <div id="songImage" class="col-sm-3"></div>
+                <div class="col-sm-9 details">
+                    <div class="row">
+                        <div id="songTitle" class="col-sm-offset-2 col-sm-10"></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-2 text-right"><small>By</small></div>
+                        <div id="songArtist" class="col-sm-10"></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-2 text-right"><small>On</small></div>
+                        <div id="songAlbum" class="col-sm-10"></div>
+                    </div>
+                </div>
+            </div>
             <div style="margin-bottom: 5px;">
-                <audio style="width: 100%;" src="audio.mp3" controls preload></audio>
+                <audio id="player" src="" controls preload></audio>
             </div>
-
-            <div class="list-group" id="mJukeList">
-
-            </div>
+            <ul id="queue" class="list-group" >
+                <li class="list-group-item">Playlist is empty</li>
+            </ul>            
         </section>
         <section id="stats" class="col-sm-4">
             <h2>Stats Snaps</h2>

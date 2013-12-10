@@ -17,11 +17,11 @@ class qqFileUploader(object):
     BUFFER_SIZE = 10485760  # 10MB
     UPLOAD_DIRECTORY = os.path.join(settings.MEDIA_ROOT ,"upload/")
 
-    def __init__(self, request, uploadDirectory=None, allowedExtensions=None, sizeLimit=None):
+    def __init__(self, request, uploadDirectory=None, chunksFolder=None, allowedExtensions=None, sizeLimit=None):
         self.allowedExtensions = allowedExtensions or []
         self.sizeLimit = sizeLimit or settings.FILE_UPLOAD_MAX_MEMORY_SIZE
         self.inputName = 'qqfile'
-        self.chunksFolder = os.path.join(settings.MEDIA_ROOT, "chunks/")
+        self.chunksFolder = chunksFolder if chunksFolder else os.path.join(settings.MEDIA_ROOT, "chunks/")
         self.request = request
         self.uploadDirectory = uploadDirectory if uploadDirectory else self.UPLOAD_DIRECTORY
         self.uploadName = ''

@@ -4,11 +4,15 @@ from django.conf.urls import patterns, include, url
 from django.contrib import admin
 admin.autodiscover()
 from mJuke.apps.establishment import views
+from mJuke import settings
 
 urlpatterns = patterns('',
 
+ 
                        url(r'^$', include('mJuke.apps.users.urls')),
 
+                       url(r'^media/(?P<path>.*)$', 'django.views.static.serve', { 'document_root': settings.MEDIA_ROOT,}),
+                       
                        url(r'^establishment/', include("mJuke.apps.establishment.urls")),
 
                        url(r'^admin/doc/', include('django.contrib.admindocs.urls')),

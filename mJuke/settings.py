@@ -124,11 +124,12 @@ INSTALLED_APPS = (
     # 'django.contrib.admindocs',
     
     # apps
+    'mJuke',
     'mJuke.apps',
     'mJuke.apps.users',
     'mJuke.apps.establishment',
     'mJuke.apps.establishment.library',
-    'mJuke.apps.establishment.playlist',
+    'mJuke.apps.establishment.player',
     
 )
 

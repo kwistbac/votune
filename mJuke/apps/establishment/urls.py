@@ -1,7 +1,6 @@
 from django.conf.urls import patterns, include, url
 import mJuke
 from mJuke.apps.establishment import views
-from mJuke.apps.establishment.playlist.views import playlist
 
 urlpatterns = patterns('',
 
@@ -9,5 +8,5 @@ urlpatterns = patterns('',
                        
                        url(r'^library/', include('mJuke.apps.establishment.library.urls')),
 
-                       url(r'^playlist/$', playlist),
+                       url(r'^player/', include('mJuke.apps.establishment.player.urls')),
                        )
