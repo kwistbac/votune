@@ -126,7 +126,7 @@ INSTALLED_APPS = (
     # apps
     'mJuke',
     'mJuke.apps',
-    'mJuke.apps.users',
+    'mJuke.apps.voter',
     'mJuke.apps.establishment',
     'mJuke.apps.establishment.library',
     'mJuke.apps.establishment.player',

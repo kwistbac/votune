@@ -11,11 +11,11 @@ $(function()
         {
             var item = $('<li>').addClass('list-group-item');
             $('<span>').html(song.title + ' - ' + song.artist)
-            .appendTo(item);
+                       .appendTo(item);
             $('<span>').attr('title', 'Number of votes')
-            .addClass('badge')
-            .html((song.queue < 0) ? 'Random' : song.queue + ' ' + (song.queue > 1) ? 'votes' : 'vote')
-            .appendTo(item);
+                       .addClass('badge')
+                       .html((song.queue < 0) ? 'Random' : song.queue + ' ' + ((song.queue > 1) ? 'votes' : 'vote'))
+                       .appendTo(item);
             queue.append(item)
         });
         

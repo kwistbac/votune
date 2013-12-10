@@ -11,7 +11,7 @@ from mJuke import settings
 urlpatterns = patterns('',
 
  
-                       url(r'^$', include('mJuke.apps.users.urls')),
+                       url(r'^voter/', include('mJuke.apps.voter.urls')),
 
                        url(r'^media/(?P<path>.*)$', 'django.views.static.serve', { 'document_root': settings.MEDIA_ROOT,}),
                        
