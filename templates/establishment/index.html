@@ -1,10 +1,9 @@
 {% extends 'establishment/base.html' %}
 {% block title %} mJuke - Player - Home {% endblock %}
 {% block content %}
-
+<div class="container">
     <div id="content-area" class="row">
-        <section id="music-manager" class="col-sm-4">
-            <h2>Manage Here</h2>
+        <section id="music-manager" class="col-sm-3">
             <ul class="list-group">
                 <li class="list-group-item"><a id="library" href="library/"><span
                         class="glyphicon glyphicon-plus"></span> Manage Music</a></li>
@@ -12,14 +11,13 @@
                     Code</a></li>
                 <li class="list-group-item"><a href="qrcode/" target="_blank"><span class="glyphicon glyphicon-plus"></span> QR
                     Code</a></li>
-                <li class="list-group-item"><a href="#"><span class="glyphicon glyphicon-plus"></span> Billing
+<!--                <li class="list-group-item"><a href="#"><span class="glyphicon glyphicon-plus"></span> Billing
                     Report</a></li>
                 <li class="list-group-item"><a href="#"><span class="glyphicon glyphicon-plus"></span> Statistics
-                    Overview</a></li>
+                    Overview</a></li>-->
             </ul>
         </section>
-        <section class="col-sm-4">
-            <h2>Playlist</h2>
+        <section class="col-sm-6">
             <div class="row song">
                 <div id="songImage" class="col-sm-3"></div>
                 <div class="col-sm-9 details">
@@ -27,11 +25,11 @@
                         <div id="songTitle" class="col-sm-offset-2 col-sm-10"></div>
                     </div>
                     <div class="row">
-                        <div class="col-sm-2 text-right"><small>By</small></div>
+                        <div class="col-sm-2"><small>By</small></div>
                         <div id="songArtist" class="col-sm-10"></div>
                     </div>
                     <div class="row">
-                        <div class="col-sm-2 text-right"><small>On</small></div>
+                        <div class="col-sm-2"><small>On</small></div>
                         <div id="songAlbum" class="col-sm-10"></div>
                     </div>
                 </div>
@@ -43,15 +41,15 @@
                 <li class="list-group-item">Playlist is empty</li>
             </ul>            
         </section>
-        <section id="stats" class="col-sm-4">
-            <h2>Stats Snaps</h2>
-
-            <div>
-                <img src="#">
-            </div>
+        <section id="stats" class="col-sm-3">
+            <ul class="list-group">
+                <li class="list-group-item"><strong>Most popular songs</strong></li>
+                <li class="list-group-item"></li>
+            </ul>
         </section>
     </div>
-    <div style="background:#666;padding-top: 20px;">
+</div>
+<!--    <div style="background:#666;padding-top: 20px;">
         <footer>
             <div class="row">
                 <section class="col-sm-4">
@@ -65,7 +63,7 @@
                 </section>
             </div>
         </footer>
-    </div>
+    </div>-->
     <!-- Audio player plugin-->
     <script src="http://api.html5media.info/1.1.6/html5media.min.js"></script>
 

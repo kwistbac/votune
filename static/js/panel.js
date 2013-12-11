@@ -11,6 +11,7 @@ $(function()
         {
             var item = $('<li>').addClass('list-group-item');
             $('<span>').html(song.title + ' - ' + song.artist)
+                       .addClass('title')
                        .appendTo(item);
             $('<span>').attr('title', 'Number of votes')
                        .addClass('badge')

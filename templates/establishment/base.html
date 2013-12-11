@@ -30,24 +30,26 @@
 {% endif %}
 
 <header>
-    <div id="logo" class="pull-left clearfix">Logo</div>
-    <div id="user-profile" class="pull-right">
-        {% if user.is_authenticated %}
-
-            <a href="/accounts/logout/">logout</a>
-            <a href="/accounts/edit/">Edit account</a>
-
-        {% else %}
-
-            <a href="/accounts/login/">login</a>
-
-        {% endif %}
-        <button type="button" class="btn btn-active disabled">
-            <span class="glyphicon glyphicon-user"></span>
-        </button>
-        <button type="button" class="btn btn-active">
-            <span class="glyphicon glyphicon-chevron-down"></span>
-        </button>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-3">
+        <!--    <div id="logo" class="pull-left clearfix">Logo</div>-->
+                <h1><span style="color:#428bca;">m</span>Juke</h1>
+            </div>
+            <div class="col-sm-offset-6 col-sm-3 text-right">
+                <div class="btn-group">
+                    <a class="btn btn-primary" href="/accounts/edit/"><span class="glyphicon glyphicon-user"></span> Edit account</a>
+                    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu pull-right text-left" role="menu">
+                        <li><a href="/accounts/edit/"><span class="glyphicon glyphicon-user"></span> Edit account</a></li>
+                        <li class="divider"></li>
+                        <li><a href="/accounts/logout/"><span class="glyphicon glyphicon-log-out"></span> Log out</a></li>
+                    </ul>
+                </div>                
+            </div>
+        </div>
     </div>
 </header>
 
