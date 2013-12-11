@@ -70,14 +70,17 @@ def voter_upVote(request,songId):
 
     try:
         song = Song.objects.get(id = songId)
-    except:
-        return HttpResponseNotFound()
-    try:
+        if song.queue is None:
+            song.queue = 1
+        else:
+            song.queue += 1
+
         account = Account.objects.get(id = request.session['account_id'])
+        vote = Vote(song = song, account = account,value= -1)
+        vote.save()
+        song.save()
     except:
         return HttpResponseForbidden()
-    vote = Vote(song = song, account = account,value= 1)
-    vote.save()
 
     return HttpResponseRedirect('/voter/%s' % request.session['account_id'])
 
@@ -86,14 +89,18 @@ def voter_downVote(request,songId):
 
     try:
         song = Song.objects.get(id = songId)
-    except:
-        return HttpResponseNotFound()
-    try:
+        if song.queue == 1:
+            song.queue = None
+        else:
+            song.queue -= 1
+
         account = Account.objects.get(id = request.session['account_id'])
+        vote = Vote(song = song, account = account,value= -1)
+        vote.save()
+        song.save()
     except:
         return HttpResponseForbidden()
-    vote = Vote(song = song, account = account,value= -1)
-    vote.save()
+
 
     return HttpResponseRedirect('/voter/%s' % request.session['account_id'])
 
