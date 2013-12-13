@@ -188,6 +188,11 @@ $(function()
 
         modal.on('hidden.bs.modal', function() { $(this).remove(); })
              .modal()
-             .load($(this).attr('href'), function() { $(this).trigger('loaded.bs.modal'); });
+             .load($(this).attr('href'), function() 
+             { 
+                 $(this).trigger('loaded.bs.modal');
+                 $(this).find('#id_startedOn').datetimepicker();
+                 $(this).find('#id_expiredOn').datetimepicker();
+             });
     });
 });
