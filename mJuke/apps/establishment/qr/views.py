@@ -14,23 +14,6 @@ import hashlib
 import time
 
 
-class qrCodeForm(ModelForm):
-    startedOn = forms.DateTimeField(label="Start DateTime")
-    expiredOn = forms.DateTimeField(label="Expire DateTime")
-
-
-    class Meta:
-        model = QrCode
-        fields = ['startedOn', 'expiredOn', ]
-
-
-def generateQR(request):
-    form = qrCodeForm()
-    return render_to_response("establishment/qr/qr.html",
-                              {'form': form},
-                              context_instance=RequestContext(request))
-
-
 class qrCodeCreationForm(ModelForm):
     startedOn = forms.DateTimeField(label="Start DateTime",
                                     initial=datetime.datetime.now(),
@@ -44,12 +27,29 @@ class qrCodeCreationForm(ModelForm):
         fields = ['startedOn', 'expiredOn', ]
 
 
+def generateQR(request):
+    form = qrCodeCreationForm()
+    hasCode = hashlib.sha1(str(time.time())).hexdigest()[:8]
+    userHasQrCode = False
+    userQR = None
+
+    if QrCode.objects.filter(account=request.user).exists():
+        userHasQrCode = True
+        userQR = QrCode.objects.filter(account=request.user)
+
+    return render_to_response("establishment/qr/qr.html",
+                              {'form': form},
+                              context_instance=RequestContext(request))
+
+
 def qrCode(request):
     form = qrCodeCreationForm()
 
     hasCode = hashlib.sha1(str(time.time())).hexdigest()[:8]
 
     userHasQrCode = False
+
+    userQR = None
 
     if QrCode.objects.filter(account=request.user).exists():
         userHasQrCode = True
