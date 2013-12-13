@@ -52,20 +52,23 @@ $(function()
     function updatePlayer() 
     {
         var player = $('#player').get(0);
-        var queue = $('#queue');
-        var ts = new Date().getTime();
-        
-        if(!player.currentSrc)
+        if(player)
         {
-            $.getJSON("player/queue", updatePlayerSong);
-        }
-        else if(player.currentTime >= player.duration - 1 || player.ended)
-        {
-            $.getJSON("player/next", updatePlayerSong);
-        }
-        else if(!queue.data('ts') || queue.data('ts') + 5000 < ts)
-        {
-            $.getJSON("player/queue", updatePlayerQueue);
+            var queue = $('#queue');
+            var ts = new Date().getTime();
+            
+            if(!player.currentSrc)
+            {
+                $.getJSON("player/queue", updatePlayerSong);
+            }
+            else if(player.currentTime >= player.duration - 1 || player.ended)
+            {
+                $.getJSON("player/next", updatePlayerSong);
+            }
+            else if(!queue.data('ts') || queue.data('ts') + 5000 < ts)
+            {
+                $.getJSON("player/queue", updatePlayerQueue);
+            }
         }
     }    
     updatePlayer();
