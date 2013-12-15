@@ -2,16 +2,13 @@
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template import RequestContext
-from django.shortcuts import render_to_response, render
+from django.shortcuts import render_to_response
 from django.contrib import messages
 from forms import UserNameEditForm, AccountEditForm, OtherInfoEditForm, PasswordChangeForm
 from django.contrib.auth.models import User
-from django.core.context_processors import csrf
 from django.contrib import auth
 import MySQLdb
 from mJuke.models import Account
-import qrcode
-from PIL import Image
 
 
 @login_required
@@ -49,6 +46,77 @@ def logout(request):
 
 
 @login_required
+def editUserName(request):
+    form = UserNameEditForm(instance=request.user)
+    if 'ok' in request.POST:
+        form = UserNameEditForm(request.POST, instance=request.user)
+        if form.is_valid():
+            form = UserNameEditForm(request.POST, instance=request.user)
+            form.username = MySQLdb.escape_string(request.POST['username'])
+            form.save()
+            return HttpResponse(status=201)
+
+    return render_to_response("establishment/accounts/change_username.html",
+                              {'form': form},
+                              context_instance=RequestContext(request))
+
+
+@login_required
+def editOther(request):
+    usrAccount = Account.getByID(request.user)
+    form = OtherInfoEditForm(instance=usrAccount)
+
+    if 'ok' in request.POST:
+        print("Submitted")
+        form = OtherInfoEditForm(request.POST, instance=usrAccount)
+        if form.is_valid():
+            form.company = MySQLdb.escape_string(request.POST['company'])
+            form.address = MySQLdb.escape_string(request.POST['address'])
+            form.postal_code = MySQLdb.escape_string(request.POST['postal_code'])
+            form.phone = MySQLdb.escape_string(request.POST['phone'])
+            form.save()
+            return HttpResponse(status=201)
+    return render_to_response("establishment/accounts/edit_other.html",
+                              {'form': form},
+                              context_instance=RequestContext(request))
+
+
+@login_required
+def editAccountInfo(request):
+    form = AccountEditForm(instance=request.user)
+
+    if 'ok' in request.POST:
+        form = AccountEditForm(request.POST, instance=request.user)
+        if form.is_valid():
+            form.firstName = MySQLdb.escape_string(request.POST['first_name'])
+            form.last_name = MySQLdb.escape_string(request.POST['last_name'])
+            form.email = MySQLdb.escape_string(request.POST['email'])
+            form.save()
+            return HttpResponse(status=201)
+
+    return render_to_response("establishment/accounts/edit_account.html",
+                              {'form': form},
+                              context_instance=RequestContext(request))
+
+
+@login_required
+def changePassword(request):
+    form = PasswordChangeForm()
+    if 'ok' in request.POST:
+        form = PasswordChangeForm(request.POST)
+        if form.is_valid():
+            u = User.objects.get(username=request.user)
+            password1 = request.POST.get('confirm_password', '')
+            u.set_password(password1)
+            u.save()
+            return HttpResponse(status=201)
+
+    return render_to_response("establishment/accounts/change_password.html",
+                              {'form': form},
+                              context_instance=RequestContext(request))
+
+
+@login_required
 def editAccount(request):
     accountEditForm = AccountEditForm(instance=request.user)
     usernameEditForm = UserNameEditForm(instance=request.user)
@@ -64,7 +132,7 @@ def editAccount(request):
             accountEditForm.email = MySQLdb.escape_string(request.POST['email'])
             accountEditForm.save()
             messages.add_message(request, messages.INFO, 'Account was successfully updated.')
-            return HttpResponseRedirect('/establishment')
+            return HttpResponseRedirect('')
 
     elif request.method == 'POST' and 'username_update' in request.POST:
         usernameEditForm = UserNameEditForm(request.POST, instance=request.user)

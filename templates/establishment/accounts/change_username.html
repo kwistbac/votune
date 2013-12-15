@@ -1,0 +1,39 @@
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h4 class="modal-title">Change username</h4>
+        </div>
+        <div class="modal-body">
+            <form method="post" role="form" class="form-horizontal" action="{% url 'change_username' %}">
+                {% csrf_token %}
+                {% for field in form %}
+                    {% if field.errors %}
+                        <div class="control-group has-error">
+                    {% else %}
+                        <div class="control-group">
+                    {% endif %}
+                <label class="control-label">{{ field.label }}</label>
+                <div class="controls">{{ field }}
+                    {% if field.errors %}
+                        <span class="help-inline">
+                    {% for error in  field.errors %}{{ error }}{% endfor %}
+                        </span>
+                    {% else %}
+                        {% if field.help_text %}
+                            <p class="help-inline">
+                                <small>{{ field.help_text }}</small>
+                            </p>
+                        {% endif %}
+                    {% endif %}
+                </div>
+                </div>
+                {% endfor %}
+            </form>
+        </div>
+        <div class="modal-footer" style=" margin-top: 0px;">
+            <button type="button" class="btn" data-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-default" id="usernameSave">Save</button>
+        </div>
+    </div>
+</div>

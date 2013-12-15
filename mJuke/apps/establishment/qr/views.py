@@ -12,6 +12,7 @@ from mJuke.apps.establishment.qr.models import QrCode
 import MySQLdb
 import hashlib
 import time
+from django.views.decorators.cache import never_cache
 
 
 class qrCodeCreationForm(ModelForm):
@@ -27,6 +28,7 @@ class qrCodeCreationForm(ModelForm):
         fields = ['startedOn', 'expiredOn', ]
 
 
+@never_cache
 def generateQR(request):
     form = qrCodeCreationForm()
     hasCode = hashlib.sha1(str(time.time())).hexdigest()[:8]
@@ -37,35 +39,26 @@ def generateQR(request):
         userHasQrCode = True
         userQR = QrCode.objects.filter(account=request.user)
 
-    return render_to_response("establishment/qr/qr.html",
-                              {'form': form},
-                              context_instance=RequestContext(request))
-
-
-def qrCode(request):
-    form = qrCodeCreationForm()
-
-    hasCode = hashlib.sha1(str(time.time())).hexdigest()[:8]
-
-    userHasQrCode = False
-
-    userQR = None
-
-    if QrCode.objects.filter(account=request.user).exists():
-        userHasQrCode = True
-        userQR = QrCode.objects.filter(account=request.user)
-
-    if request.method == 'POST' and 'qrCode_submit' in request.POST:
+    if 'ok' in request.POST:
         form = qrCodeCreationForm(request.POST)
 
         if form.is_valid():
-
             #check if user has already existing qr code
-            if QrCode.objects.filter(account=request.user).exists():
+            if userHasQrCode:
+                #delete previous qrCode
+                prevQr = QrCode.objects.get(account=request.user)
+                prevQrPath = os.path.abspath(os.path.realpath(settings.MEDIA_ROOT) + "/qrCodes/" + str(request.user.id) + "_" + prevQr.hasCode + ".jpg")
+                os.unlink(prevQrPath)
+
+                #create new qr image
                 startedOn = MySQLdb.escape_string(request.POST['startedOn'])
                 expiredOn = MySQLdb.escape_string(request.POST['expiredOn'])
-                QrCode.objects.filter(account=request.user).update(startedOn=startedOn, expiredOn=expiredOn,
-                                                                   createdOn=datetime.datetime.now(), hasCode=hasCode)
+                QrCode.objects.filter(account=request.user).update(
+                    startedOn=startedOn,
+                    expiredOn=expiredOn,
+                    createdOn=datetime.datetime.now(),
+                    hasCode=hasCode)
+
             else:
                 c = form.save(commit=False)
                 c.account = request.user
@@ -78,14 +71,17 @@ def qrCode(request):
                 box_size=5,
                 border=4,
             )
-            qr.add_data("http://127.0.0.1:8000/" + hasCode)
+            qr.add_data("http://127.0.0.1:8000/voter/" + hasCode)
             qr.make(fit=True)
             img = qr.make_image()
             imagePath = os.path.abspath(
-                os.path.realpath(settings.MEDIA_ROOT) + "/qrCodes/" + str(request.user.id) + "_qr_code.jpg")
+                os.path.realpath(settings.MEDIA_ROOT) + "/qrCodes/" + str(request.user.id) + "_" + hasCode + ".jpg")
             img.save(imagePath)
-            return HttpResponseRedirect("")
-    return render_to_response("establishment/qr/qrCode.html",
+
+            if not userHasQrCode:
+                return HttpResponse(status=201)
+
+    return render_to_response("establishment/qr/qr.html",
                               {'form': form,
                                'userHasCode': userHasQrCode,
                                'usrQr': userQR},

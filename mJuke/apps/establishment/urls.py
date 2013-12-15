@@ -1,7 +1,7 @@
 from django.conf.urls import patterns, include, url
 import mJuke
 from mJuke.apps.establishment import views
-from mJuke.apps.establishment.qr.views import generateQR, qrCode
+from mJuke.apps.establishment.qr.views import generateQR
 
 urlpatterns = patterns('',
 
@@ -11,7 +11,6 @@ urlpatterns = patterns('',
 
                        url(r'^player/', include('mJuke.apps.establishment.player.urls')),
 
-                       url(r'^qr/$', generateQR),
+                       url(r'^qr/$', generateQR, name='qr-code'),
 
-                       url(r'^qrcode/$', qrCode),
                        )

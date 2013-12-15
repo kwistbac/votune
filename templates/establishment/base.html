@@ -41,12 +41,18 @@
             </div>
             <div class="col-sm-offset-6 col-sm-3 text-right">
                 <div class="btn-group">
-                    <a class="btn btn-primary" href="/accounts/edit/"><span class="glyphicon glyphicon-user"></span> Edit account</a>
+                    <a class="btn btn-primary" href="#"><span class="glyphicon glyphicon-user"></span> Account</a>
                     <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
                         <span class="caret"></span>
                     </button>
                     <ul class="dropdown-menu pull-right text-left" role="menu">
-                        <li><a href="/accounts/edit/"><span class="glyphicon glyphicon-user"></span> Edit account</a></li>
+                       <li><a href="/accounts/change_username" id="changeUsername"><span class="glyphicon glyphicon-user"></span> Change username</a></li>
+                        <li class="divider"></li>
+                        <li><a href="/accounts/edit/" id="edit_account_info"><span class="glyphicon glyphicon-user"></span> Account information</a></li>
+                        <li class="divider"></li>
+                        <li><a href="/accounts/edit_other/" id="edit_other"><span class="glyphicon glyphicon-user"></span> Other information</a></li>
+                        <li class="divider"></li>
+                        <li><a href="/accounts/change_password/" id="change_password"><span class="glyphicon glyphicon-user"></span> Change password</a></li>
                         <li class="divider"></li>
                         <li><a href="/accounts/logout/"><span class="glyphicon glyphicon-log-out"></span> Log out</a></li>
                     </ul>

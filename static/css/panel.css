@@ -6,6 +6,11 @@
     #libraryRemoveModal .modal-dialog { width: 450px; }
 	
 	#manageQR .modal-dialog { width: 450px; }
+
+    #editAccountInfoModal .modal-dialog { width: 450px; }
+    #editOtherModal .modal-dialog { width: 450px; }
+    #changeUsernameModal .modal-dialog { width: 450px; }
+    #changePasswordModal .modal-dialog { width: 450px; }
 }
 [class^="fa-"]:before, 
 [class*=" fa-"]:before { font-family:FontAwesome!important; }
