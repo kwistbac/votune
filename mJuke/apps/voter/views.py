@@ -47,6 +47,8 @@ def voter_listSongs(request):
 
 def voter_listPopularSongs(request):
 
+    'Have we thought about how popular songs are defined?'
+
     try:
         accountId = request.session['account_id']
         account = Account.objects.get(id = accountId)
@@ -68,41 +70,40 @@ def voter_help(request):
 
 def voter_upVote(request,songId):
 
-    try:
-        song = Song.objects.get(id = songId)
-        if song.queue is None:
-            song.queue = 1
-        else:
-            song.queue += 1
-
-        account = Account.objects.get(id = request.session['account_id'])
-        vote = Vote(song = song, account = account,value= -1)
-        vote.save()
-        song.save()
-    except:
-        return HttpResponseForbidden()
-
+    vote(request, songId, 1)
     return HttpResponseRedirect('/voter/%s' % request.session['account_id'])
 
 
 def voter_downVote(request,songId):
 
+    vote(request, songId, -1)
+    return HttpResponseRedirect('/voter/%s' % request.session['account_id'])
+
+def vote(request,songId,amount):
+
     try:
-        song = Song.objects.get(id = songId)
-        if song.queue == 1:
+        song = Song.objects.get(id=songId)
+
+        if song.queue < 0 and amount > 0:
+            song.queue = 0 + amount
+        elif song.queue < 0 and amount <= 0:
+            song.queue = None
+        elif song.queue is None and amount > 0:
+            song.queue = amount
+        elif song.queue is None and amount <= 0:
+            song.queue = None
+        elif (song.queue + amount) <= 0:
             song.queue = None
         else:
-            song.queue -= 1
+            song.queue += amount
 
         account = Account.objects.get(id = request.session['account_id'])
-        vote = Vote(song = song, account = account,value= -1)
-        vote.save()
+        vote = Vote(song = song, account = account, value= amount)
         song.save()
+        vote.save()
+
     except:
         return HttpResponseForbidden()
-
-
-    return HttpResponseRedirect('/voter/%s' % request.session['account_id'])
 
 
 def voter_suggest(request):

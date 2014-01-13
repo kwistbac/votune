@@ -17,7 +17,13 @@
             {% if playlist %}
                 {% for song in playlist %}
                     <li class="list-group-item"><span class="glyphicon glyphicon-circle-arrow-right">
-                        </span>&nbsp;{{ song.artist }} - {{ song.title }} <span class="badge">{{ song.queue }}</span><br/>
+                        </span>&nbsp;{{ song.artist }} - {{ song.title }} <span class="badge">
+                        {% if song.queue < 0 %}
+                            R
+                        {% else %}
+                            {{ song.queue }}
+                        {% endif %}
+                        </span><br/>
                         <a href="/voter/upvote/{{song.id}}"><button type="button" class="btn btn-success btn-style"><span class="glyphicon glyphicon-arrow-up"></span></button></a>
                         <a href="/voter/downvote/{{song.id}}"><button type="button" class="btn btn-danger btn-style "><span class="glyphicon glyphicon-arrow-down"></span></button></a>
                     </li>
