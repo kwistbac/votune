@@ -10,6 +10,7 @@ from django.shortcuts import render_to_response
 from django.template import Context, RequestContext
 from django.http import HttpResponseRedirect
 from mJuke.SearchService import *
+import json
 
 def voter_index(request,accountId):
 
@@ -127,4 +128,20 @@ def voter_suggest(request):
 
         return render_to_response('voter/suggest.html',{'accountId': accountId}, context_instance=RequestContext(request))
 
+def voter_update(request):
 
+    try:
+        accountId = request.session['account_id']
+        account = Account.objects.get(user_id = accountId)
+    except:
+        return HttpResponseNotFound()
+
+    result = {'current':None, 'queue': []}
+    current = Song.objects.filter(queue=0, account=account)
+    result['current'].append(model_to_dict(song))
+
+    queue = Song.objects.filter(account=account).exclude(queue=0).order_by('-queue')[:15]
+    for song in queue:
+        result['queue'].append(model_to_dict(song))
+
+    return HttpResponse(json.dumps(result), content_type="application/json")
