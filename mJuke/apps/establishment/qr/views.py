@@ -71,7 +71,7 @@ def generateQR(request):
                 box_size=5,
                 border=4,
             )
-            qr.add_data("http://127.0.0.1:8000/voter/" + hasCode)
+            qr.add_data("http://127.0.0.1:8000/" + hasCode)
             qr.make(fit=True)
             img = qr.make_image()
             imagePath = os.path.abspath(

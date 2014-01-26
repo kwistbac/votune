@@ -10,7 +10,8 @@ from mJuke import settings
 
 urlpatterns = patterns('',
 
- 
+                       url(r'^(?P<hashCode>[a-z0-9]{8})$', include('mJuke.apps.voter.urls')),
+
                        url(r'^voter/', include('mJuke.apps.voter.urls')),
 
                        url(r'^media/(?P<path>.*)$', 'django.views.static.serve', { 'document_root': settings.MEDIA_ROOT,}),

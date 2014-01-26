@@ -4,12 +4,27 @@ from django.contrib.auth.forms import UserCreationForm
 from django.db.models import Q
 from django.template import loader, Context
 from django.http import HttpResponse, HttpResponseRedirect, HttpResponseNotFound, HttpResponseForbidden
+from mJuke.apps.establishment.qr.models import QrCode
 from mJuke.models import *
 from django.contrib import auth
 from django.shortcuts import render_to_response
 from django.template import Context, RequestContext
 from django.http import HttpResponseRedirect
 from mJuke.SearchService import *
+import datetime
+from django.utils.timezone import utc
+
+
+def main_index(request, hashCode):
+    if QrCode.objects.filter(hasCode=hashCode).exists():
+        qrObj = QrCode.objects.get(hasCode=hashCode)
+        qrExprDateTime = qrObj.expiredOn
+        if qrExprDateTime <= datetime.datetime.utcnow().replace(tzinfo=utc):
+            return HttpResponse("QR code has expired.")
+        else:
+            return voter_index(request, qrObj.account_id)
+    else:
+        return HttpResponse("Hash Value not found")
 
 def voter_index(request,accountId):
 

@@ -2,7 +2,7 @@
     <div class="modal-content">
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-            <h4 class="modal-title">Create QR code</h4>
+            <h4 class="modal-title">QR code Management</h4>
         </div>
         <div class="modal-body">
             <form method="post" role="form" class="form-horizontal" action="{% url 'qr-code' %}">
@@ -28,7 +28,7 @@
                 {% for usrQrCode in usrQr %}
                     <b>Previous QR code</b><br/>
                     <span>Expire date/time: {{ usrQrCode.expiredOn }}</span><br/>
-                    <span>Url: http://127.0.0.1:8000/voter/{{ usrQrCode.hasCode }}</span>
+                    <span>Url: http://127.0.0.1:8000/{{ usrQrCode.hasCode }}</span>
                     <img src="../../media/qrCodes/{{ user.id }}_{{ usrQrCode.hasCode }}.jpg">
                 {% endfor %}
             {% endif %}

@@ -3,6 +3,7 @@ from mJuke.apps.voter.views import *
 
 urlpatterns = patterns('',
 
+                       (r'^$', main_index),
                        (r'^(\d{1,3})$', voter_index),
                        (r'^upvote/(\d{1,3})$', voter_upVote),
                        (r'^downvote/(\d{1,3})$', voter_downVote),

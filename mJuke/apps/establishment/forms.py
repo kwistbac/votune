@@ -22,7 +22,7 @@ class AccountEditForm(forms.ModelForm):
 
 
 class UserNameEditForm(forms.ModelForm):
-    username = forms.CharField(max_length=30, min_length=4)
+    username = forms.CharField(max_length=30, min_length=4, label="New username")
 
     class Meta:
         model = User
