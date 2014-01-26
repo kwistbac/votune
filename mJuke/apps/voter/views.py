@@ -2,8 +2,10 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.db.models import Q
+from django.forms import model_to_dict
 from django.template import loader, Context
 from django.http import HttpResponse, HttpResponseRedirect, HttpResponseNotFound, HttpResponseForbidden
+from mJuke.apps.establishment import qr
 from mJuke.apps.establishment.qr.models import QrCode
 from mJuke.models import *
 from django.contrib import auth
@@ -13,6 +15,7 @@ from django.http import HttpResponseRedirect
 from mJuke.SearchService import *
 import datetime
 from django.utils.timezone import utc
+import json
 
 
 def main_index(request, hashCode):
@@ -25,6 +28,7 @@ def main_index(request, hashCode):
             return voter_index(request, qrObj.account_id)
     else:
         return HttpResponse("Hash Value not found")
+
 
 def voter_index(request,accountId):
 
@@ -142,4 +146,20 @@ def voter_suggest(request):
 
         return render_to_response('voter/suggest.html',{'accountId': accountId}, context_instance=RequestContext(request))
 
+def voter_update(request):
 
+    try:
+        accountId = request.session['account_id']
+        account = Account.objects.get(user_id = accountId)
+    except:
+        return HttpResponseNotFound()
+
+    result = {'current':None, 'queue': []}
+    current = Song.objects.filter(queue=0, account=account)
+    result['current'].append(model_to_dict(queue))
+
+    queue = Song.objects.filter(account=account).exclude(queue=0).order_by('-queue')[:15]
+    for song in queue:
+        result['queue'].append(model_to_dict(song))
+
+    return HttpResponse(json.dumps(result), content_type="application/json")

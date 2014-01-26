@@ -12,6 +12,7 @@ urlpatterns = patterns('',
                        (r'^about/$', voter_about),
                        (r'^help/$', voter_help),
                        (r'^suggest/$', voter_suggest),
+                       (r'^update/$', voter_update),
 
 
                        )
