@@ -1,54 +1,96 @@
-$(function () {
+$(document).ready(function()
+{
     $('ul.messages').fadeOut(2000);
+    update()
+    setInterval(update, 5000);
 
-    function updateVoterQueue(data) {
-        var queue = $('#queue');
-
-        queue.data('ts', new Date().getTime()).empty();
-        $.each(data.queue, function (index, song) {
-            var item = $('<li>').addClass('list-group-item');
-            $('<span>').html(song.title + ' - ' + song.artist)
-                .addClass('title')
-                .appendTo(item);
-            $('<span>').attr('title', 'Number of votes')
-                .addClass('badge')
-                .html((song.queue < 0) ? 'Random' : song.queue + ' ' + ((song.queue > 1) ? 'votes' : 'vote'))
-                .appendTo(item);
-            queue.append(item)
-        });
-
-        return true;
+    function update()
+    {
+        $.getJSON("update", updateNowPlaying);
     }
 
-    function updateVoterSong(data) {
+    function updateNowPlaying(data)
+    {
         if (!data.current)
             return false;
 
-        var player = $('#player').get(0);
-        player.src = data.current.url;
-        player.play();
+        var nowPlaying = $('#nowplaying');
+        nowPlaying.empty()
+        $('<span>').html(data.current.title + ' - ' + data.current.artist)
+                .addClass('title')
+        .appendTo(nowPlaying);
 
-        $('#songTitle').html(data.current.title);
-        $('#songArtist').html(data.current.artist);
-        $('#songAlbum').html(data.current.album);
-        if (data.current.image) {
-            var img = $('<img>').attr('src', data.current.image);
-            $('#songImage').empty().append(img);
-        }
-        else {
-            var icon = $('<span>').addClass('glyphicon glyphicon-music');
-            $('#playerImage').empty().append(icon);
-        }
 
-        return updateVoterQueue(data);
+        return updateQueue
     }
 
-    function updateVoter() {
-                $.getJSON("voter/update", updateVoterSong);
+    function updateQueue(data) {
+        if (!data.queue)
+            return false;
+
+        var queue = $('#quaue');
+
+        queue.data('ts', new Date().getTime()).empty();
+        $.each(data.queue, function (index, song) {
+
+            var listItem = $('<li>').addClass('list-group-item');
+
+            $('<span>').html(song.title + ' - ' + song.artist)
+                .addClass('title')
+                .appendTo(listItem);
+
+            $('<button>')
+                 .addClass('btn btn-success btn-style')
+                 .addClass('upvote-button')
+                 .attr({ type: 'button', id: song.id , value:'upvote'})
+                 .appendTo(listItem)
+
+             $('<button>')
+                 .addClass('btn btn-success btn-style')
+                 .addClass('downvote-button')
+                 .attr({ type: 'button', id: song.id , value:'downvote'})
+                 .appendTo(listItem)
+
+
+            $('<span>').attr('title', 'Number of votes')
+                .addClass('badge')
+                .html((song.queue < 0) ? 'Random' : song.queue + ' ' + ((song.queue > 1) ? 'votes' : 'vote'))
+                .appendTo(listItem);
+
+
+            queue.append(listItem)
+
+
+        });
+
+        return true;
+
     }
 
-    updateVoter();
-    setInterval(updateVoter, 1000);
+    $(document).on('click', ".upvote-button", function (e) {
+        e.preventDefault();
 
+        jQuery.ajax(
+        {
+            'type': 'POST',
+            'url': 'upvote/',
+            'data': { 'songId': $(this).attr('id')},
+            'dataType': 'json',
+            'success': updateQueue
+        });
+     });
 
-});
+    $(document).on('click', ".downvote-button", function (e) {
+        e.preventDefault();
+
+        jQuery.ajax(
+        {
+            'type': 'POST',
+            'url': 'downvote/',
+            'data': { 'songId': $(this).attr('id')},
+            'dataType': 'json',
+            'success': updateQueue
+        });
+     });
+}
+);

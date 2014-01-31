@@ -86,17 +86,46 @@ def voter_help(request):
 
     return render_to_response('voter/help.html',{'accountId': request.session['account_id']}, context_instance=RequestContext(request))
 
+def voter_suggest(request):
+    try:
+        accountId = request.session['account_id']
+    except:
+        return HttpResponseForbidden()
 
-def voter_upVote(request,songId):
+    if  request.method == 'POST':
 
-    vote(request, songId, 1)
-    return HttpResponseRedirect('/voter/%s' % request.session['account_id'])
+        account = Account.objects.get(id = accountId)
+        title = request.POST.get('title', '')
+        artist = request.POST.get('artist', '')
+        album = request.POST.get('album', '')
+        suggestion = Suggest(title = title, artist = artist, album= album, account = account)
+        suggestion.save()
+
+        return HttpResponseRedirect('/voter/%s' % accountId)
+
+    else:
+
+        return render_to_response('voter/suggest.html',{'accountId': accountId}, context_instance=RequestContext(request))
+
+
+
+
+def voter_upVote(request):
+
+    if request.method == 'POST':
+        songId = request.POST['songId']
+        vote(request, songId, 1)
+
+    return voter_update(request)
 
 
 def voter_downVote(request,songId):
 
+    if request.method == 'POST':
+        songId = request.POST['songId']
     vote(request, songId, -1)
-    return HttpResponseRedirect('/voter/%s' % request.session['account_id'])
+
+    return voter_update(request)
 
 def vote(request,songId,amount):
 
@@ -125,27 +154,6 @@ def vote(request,songId,amount):
         return HttpResponseForbidden()
 
 
-def voter_suggest(request):
-    try:
-        accountId = request.session['account_id']
-    except:
-        return HttpResponseForbidden()
-
-    if  request.method == 'POST':
-
-        account = Account.objects.get(id = accountId)
-        title = request.POST.get('title', '')
-        artist = request.POST.get('artist', '')
-        album = request.POST.get('album', '')
-        suggestion = Suggest(title = title, artist = artist, album= album, account = account)
-        suggestion.save()
-
-        return HttpResponseRedirect('/voter/%s' % accountId)
-
-    else:
-
-        return render_to_response('voter/suggest.html',{'accountId': accountId}, context_instance=RequestContext(request))
-
 def voter_update(request):
 
     try:
@@ -156,7 +164,7 @@ def voter_update(request):
 
     result = {'current':None, 'queue': []}
     current = Song.objects.filter(queue=0, account=account)
-    result['current'].append(model_to_dict(queue))
+    result['current'].append(model_to_dict(current))
 
     queue = Song.objects.filter(account=account).exclude(queue=0).order_by('-queue')[:15]
     for song in queue:

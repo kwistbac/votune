@@ -4,36 +4,12 @@
 
     <!-- styling++ still -->
 
-    <div id="votuneList" class="row">
+       <div id="mJukeList" class="row">
 
-    {% if nowplaying %}
-        <p>Now playing:{{ nowplaying.artist }} - {{ nowplaying.title }}</p>
-    {% endif %}
-
-        <section id="music-manager" class="col-sm-4">
-          <ul class="list-group">
-            <li class="list-group-item" style="background:#3498db; color:white; text-align:center;">Quaue</li>
-
-            {% if playlist %}
-                {% for song in playlist %}
-                    <li class="list-group-item"><span class="glyphicon glyphicon-circle-arrow-right">
-                        </span>&nbsp;{{ song.artist }} - {{ song.title }} <span class="badge">
-                        {% if song.queue < 0 %}
-                            R
-                        {% else %}
-                            {{ song.queue }}
-                        {% endif %}
-                        </span><br/>
-                        <a href="/voter/upvote/{{song.id}}"><button type="button" class="btn btn-success btn-style"><span class="glyphicon glyphicon-arrow-up"></span></button></a>
-                        <a href="/voter/downvote/{{song.id}}"><button type="button" class="btn btn-danger btn-style "><span class="glyphicon glyphicon-arrow-down"></span></button></a>
-                    </li>
-                {% endfor %}
-            {% else %}
-                <li class="list-group-item">&nbsp; No songs found </li>
-            {% endif %}
-
-         </ul>
-        </section>
+        <div id="nowplaying"></div>
+        <ul id="queue" class="list-group">
+                    <li class="list-group-item">list is empty</li>
+        </ul>
     </div>
 
 {% endblock %}
