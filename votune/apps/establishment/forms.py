@@ -1,7 +1,7 @@
 from django import forms
 from django.forms import ModelForm
 from django.contrib.auth.models import User
-from mJuke.models import Account
+from votune.models import Account
 
 
 class AccountEditForm(forms.ModelForm):

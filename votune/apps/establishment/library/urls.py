@@ -1,5 +1,5 @@
 from django.conf.urls import patterns, url
-from mJuke.apps.establishment.library import views
+from votune.apps.establishment.library import views
 from django.contrib.auth.decorators import login_required
 
 urlpatterns = patterns('',

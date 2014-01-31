@@ -2,21 +2,21 @@ from django.conf.urls import patterns, include, url
 
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
-from mJuke import settings
+from votune import settings
 
 admin.autodiscover()
-from mJuke.apps.establishment import views
-from mJuke import settings
+from votune.apps.establishment import views
+from votune import settings
 
 urlpatterns = patterns('',
 
-                       url(r'^(?P<hashCode>[a-z0-9]{8})$', include('mJuke.apps.voter.urls')),
+                       url(r'^(?P<hashCode>[a-z0-9]{8})$', include('votune.apps.voter.urls')),
 
-                       url(r'^voter/', include('mJuke.apps.voter.urls')),
+                       url(r'^voter/', include('votune.apps.voter.urls')),
 
                        url(r'^media/(?P<path>.*)$', 'django.views.static.serve', { 'document_root': settings.MEDIA_ROOT,}),
                        
-                       url(r'^establishment/', include("mJuke.apps.establishment.urls")),
+                       url(r'^establishment/', include("votune.apps.establishment.urls")),
 
                        url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
 

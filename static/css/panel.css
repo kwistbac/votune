@@ -21,7 +21,7 @@ i[class^="fa-"] { font-style:normal; }
 html, body { background:#ecf0f1; }
 header { background: orange; height: 4em; padding: 10px; border-bottom: 1px solid gray; }
 footer { color:white; }
-h1 { margin:0 0 0 15px; }
+h1 { margin:0 0 0 15px; color:#428bca; }
 
 ul.messages li { list-style-type: none; }
 ul.messages li.info { color: #ffffff; background-color: green; display: inline-block; }

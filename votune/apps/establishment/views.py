@@ -8,7 +8,7 @@ from forms import UserNameEditForm, AccountEditForm, OtherInfoEditForm, Password
 from django.contrib.auth.models import User
 from django.contrib import auth
 import MySQLdb
-from mJuke.models import Account
+from votune.models import Account
 
 
 @login_required

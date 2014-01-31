@@ -7,8 +7,8 @@ from django import forms
 from bootstrap3_datetime.widgets import DateTimePicker
 from django.template import RequestContext
 import qrcode
-from mJuke import settings
-from mJuke.apps.establishment.qr.models import QrCode
+from votune import settings
+from votune.apps.establishment.qr.models import QrCode
 import MySQLdb
 import hashlib
 import time

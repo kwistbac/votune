@@ -4,6 +4,6 @@
 /manage.py
 .idea/
 .kdev4/
-mJuke.kdev4
+*.kdev4
 *.pyc
 *.pyo

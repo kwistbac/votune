@@ -11,11 +11,11 @@ from django.views.decorators.csrf import csrf_exempt
 from django.forms import ModelForm
 from django.utils import timezone
 
-from mJuke.models import Song
-from mJuke.models import Account
+from votune.models import Song
+from votune.models import Account
 
-from mJuke import settings
-from mJuke.libs.file_uploader import qqFileUploader
+from votune import settings
+from votune.libs.file_uploader import qqFileUploader
 
 from mutagen.easyid3 import EasyID3
 from mutagen.mp3 import MP3

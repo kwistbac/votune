@@ -1,5 +1,5 @@
 from django.conf.urls import patterns, url
-from mJuke.apps.voter.views import *
+from votune.apps.voter.views import *
 
 urlpatterns = patterns('',
 

@@ -1,4 +1,4 @@
-# Django settings for mJuke project.
+# Django settings for votune project.
 import os
 
 DEBUG = True
@@ -13,10 +13,10 @@ MANAGERS = ADMINS
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': 'mJuke', # Or path to database file if using sqlite3.
+        'NAME': 'votune', # Or path to database file if using sqlite3.
         # The following settings are not used with sqlite3:
-        'USER': 'mJuke',
-        'PASSWORD': 'mJuke',
+        'USER': 'votune',
+        'PASSWORD': 'votune',
         'HOST': '127.0.0.1', # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
         'PORT': '', # Set to empty string for default.
     }
@@ -105,10 +105,10 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.locale.LocaleMiddleware',
 )
 
-ROOT_URLCONF = 'mJuke.urls'
+ROOT_URLCONF = 'votune.urls'
 
 # Python dotted path to the WSGI application used by Django's runserver.
-WSGI_APPLICATION = 'mJuke.wsgi.application'
+WSGI_APPLICATION = 'votune.wsgi.application'
 
 TEMPLATE_DIRS = (os.path.join(os.path.dirname(__file__), '..', 'templates').replace('\\', '/'),)
 
@@ -124,13 +124,13 @@ INSTALLED_APPS = (
     # 'django.contrib.admindocs',
     
     # apps
-    'mJuke',
-    'mJuke.apps',
-    'mJuke.apps.voter',
-    'mJuke.apps.establishment',
-    'mJuke.apps.establishment.library',
-    'mJuke.apps.establishment.player',
-    'mJuke.apps.establishment.qr',
+    'votune',
+    'votune.apps',
+    'votune.apps.voter',
+    'votune.apps.establishment',
+    'votune.apps.establishment.library',
+    'votune.apps.establishment.player',
+    'votune.apps.establishment.qr',
     'bootstrap3_datetime',
 
 )

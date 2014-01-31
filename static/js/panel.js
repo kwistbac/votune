@@ -50,7 +50,7 @@ $(function () {
             var ts = new Date().getTime();
 
             if (!player.currentSrc) {
-                $.getJSON("player/queue", updatePlayerSong);
+                $.getJSON("player/current", updatePlayerSong);
             }
             else if (player.currentTime >= player.duration - 1 || player.ended) {
                 $.getJSON("player/next", updatePlayerSong);

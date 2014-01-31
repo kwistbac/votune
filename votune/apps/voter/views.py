@@ -5,14 +5,14 @@ from django.db.models import Q
 from django.forms import model_to_dict
 from django.template import loader, Context
 from django.http import HttpResponse, HttpResponseRedirect, HttpResponseNotFound, HttpResponseForbidden
-from mJuke.apps.establishment import qr
-from mJuke.apps.establishment.qr.models import QrCode
-from mJuke.models import *
+from votune.apps.establishment import qr
+from votune.apps.establishment.qr.models import QrCode
+from votune.models import *
 from django.contrib import auth
 from django.shortcuts import render_to_response
 from django.template import Context, RequestContext
 from django.http import HttpResponseRedirect
-from mJuke.SearchService import *
+from votune.SearchService import *
 import datetime
 from django.utils.timezone import utc
 import json
