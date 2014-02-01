@@ -81,7 +81,7 @@ def add(request):
             audio = MP3(uploadPath + file)
             comments = audio.tags.getall('COMM:')
             song = Song(account_id=account.id,
-                        checksum=hashlib.md5(open(uploadPath + file, 'rb').read()).hexdigest(),
+                        hash=hashlib.md5(open(uploadPath + file, 'rb').read()).hexdigest(),
                         title=audio.tags['TIT2'].text[0] if 'TIT2' in audio.tags and audio.tags['TIT2'].text[0] else name[1],
                         artist=audio.tags['TPE1'].text[0] if 'TPE1' in audio.tags and audio.tags['TPE1'].text[0] else "Uknown artist",
                         length=audio.info.length,

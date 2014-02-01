@@ -4,10 +4,12 @@ from django.contrib.auth.models import User
 
 class Account(models.Model):
     user = models.OneToOneField(User)
-    company = models.CharField(max_length=50)
+    company = models.CharField(max_length=50, blank=True)
     address = models.CharField(max_length=100)
     postal_code = models.CharField(max_length=20)
     phone = models.CharField(max_length=50)
+    spotify_username = models.CharField(max_length=50, blank=True)
+    spotify_password = models.CharField(max_length=50, blank=True)
     modified = models.DateTimeField(auto_now=True)
 
     @classmethod
@@ -16,8 +18,13 @@ class Account(models.Model):
 
 
 class Song(models.Model):
+    SOURCE_FILE = 0
+    SOURCE_SPOTIFY = 1
+    SOURCES = ((SOURCE_FILE, 'File'), (SOURCE_SPOTIFY, 'Spotify'))
+    
     account = models.ForeignKey(Account)
-    checksum = models.CharField(max_length=32)
+    source = models.SmallIntegerField(choices=SOURCES, default=SOURCE_FILE)
+    hash = models.CharField(max_length=32)
     queue = models.SmallIntegerField(null=True, blank=True)
     length = models.PositiveSmallIntegerField(null=True)
     title = models.CharField(max_length=60)

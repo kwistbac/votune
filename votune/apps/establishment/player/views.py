@@ -89,7 +89,17 @@ def current(request):
     if current != None:
         result['current'] = model_to_dict(current)
         
-        result['current']['url'] = settings.MEDIA_URL + "library/" + str(account.id) + "/" + str(current.id) + ".mp3"
+        if current.source == Song.SOURCE_SPOTIFY:
+            if len(account.spotify_username) == 0 or len(account.spotify_password) == 0:
+                return next(request)
+            query = {'uri': 'spotify:track:' + current.hash, 'username': account.spotify_username, 'password': account.spotify_password}
+            try:
+                url = requests.get("http://localhost:8080/", params=query)
+            except:
+                return next(request)
+            result['current']['url'] = url.text
+        else:
+            result['current']['url'] = settings.MEDIA_URL + "library/" + str(account.id) + "/" + str(current.id) + ".mp3"
         
         imagePath = "library/" + str(account.id) + "/" + str(current.id) + ".jpg"
         if os.path.isfile(os.path.join(settings.MEDIA_ROOT, imagePath)):

@@ -46,7 +46,12 @@ class OtherInfoEditForm(ModelForm):
     class Meta:
         model = Account
         fields = ("company",
-                  "address", "postal_code", "phone",)
+                  "address", 
+                  "postal_code", 
+                  "phone",
+                  "spotify_username",
+                  "spotify_password",)
+        widgets = {'spotify_password': forms.PasswordInput(render_value=True),}
 
     def __init__(self, *args, **kwargs):
         super(OtherInfoEditForm, self).__init__(*args, **kwargs)
