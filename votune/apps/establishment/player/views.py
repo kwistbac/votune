@@ -97,13 +97,15 @@ def current(request):
                 url = requests.get("http://localhost:8080/", params=query)
             except:
                 return next(request)
-            result['current']['url'] = url.text
+            urls = url.text.split("|")
+            result['current']['url'] = urls[0]
+            if len(urls) > 1:
+                result['current']['image'] = urls[1]
         else:
             result['current']['url'] = settings.MEDIA_URL + "library/" + str(account.id) + "/" + str(current.id) + ".mp3"
-        
-        imagePath = "library/" + str(account.id) + "/" + str(current.id) + ".jpg"
-        if os.path.isfile(os.path.join(settings.MEDIA_ROOT, imagePath)):
-            result['current']['image'] = settings.MEDIA_URL + imagePath
+            imagePath = "library/" + str(account.id) + "/" + str(current.id) + ".jpg"
+            if os.path.isfile(os.path.join(settings.MEDIA_ROOT, imagePath)):
+                result['current']['image'] = settings.MEDIA_URL + imagePath
     
     queue = get_queued_songs(account)
     for song in queue:
