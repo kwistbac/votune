@@ -34,14 +34,10 @@ def voter_index(request,accountId):
 
     try:
         request.session['account_id'] = accountId
-        account = Account.objects.get(id = accountId)
     except:
         return HttpResponseNotFound()
 
-    playList = Song.objects.filter(account=account).exclude(queue=0).order_by('-queue')[:15]
-    nowPlaying = Song.objects.filter(queue=0, account=account)
-
-    return render_to_response('voter/index.html',{'playlist' : playList,'nowplaying': nowPlaying, 'accountId': accountId}, context_instance=RequestContext(request))
+    return render_to_response('voter/index.html',{}, context_instance=RequestContext(request))
 
 
 def voter_listSongs(request):
@@ -56,57 +52,13 @@ def voter_listSongs(request):
 
         query = request.POST.get('srch-query')
         songList = SearchService.SearchMusicLibrary(query,account)
-        return render_to_response('voter/songs.html',{'songlist' : songList,'accountId': accountId}, context_instance=RequestContext(request))
 
     else:
 
         songList = Song.objects.filter(account = account)
-        return render_to_response('voter/songs.html',{'songlist' : songList,'accountId': accountId}, context_instance=RequestContext(request))
 
 
-def voter_listPopularSongs(request):
-
-    'Have we thought about how popular songs are defined?'
-
-    try:
-        accountId = request.session['account_id']
-        account = Account.objects.get(id = accountId)
-        songList = Song.objects.filter(account = account)
-    except:
-        return HttpResponseNotFound()
-
-    return render_to_response('voter/songs.html',{'songlist' : songList, 'accountId': accountId}, context_instance=RequestContext(request))
-
-
-def voter_about(request):
-
-    return render_to_response('voter/about.html',{'accountId':request.session['account_id']}, context_instance=RequestContext(request))
-
-def voter_help(request):
-
-    return render_to_response('voter/help.html',{'accountId': request.session['account_id']}, context_instance=RequestContext(request))
-
-def voter_suggest(request):
-    try:
-        accountId = request.session['account_id']
-    except:
-        return HttpResponseForbidden()
-
-    if  request.method == 'POST':
-
-        account = Account.objects.get(id = accountId)
-        title = request.POST.get('title', '')
-        artist = request.POST.get('artist', '')
-        album = request.POST.get('album', '')
-        suggestion = Suggest(title = title, artist = artist, album= album, account = account)
-        suggestion.save()
-
-        return HttpResponseRedirect('/voter/%s' % accountId)
-
-    else:
-
-        return render_to_response('voter/suggest.html',{'accountId': accountId}, context_instance=RequestContext(request))
-
+    return render_to_response("searchResult.html",{'object_list': songList,},context_instance=RequestContext(request))
 
 
 
@@ -119,11 +71,11 @@ def voter_upVote(request):
     return voter_update(request)
 
 
-def voter_downVote(request,songId):
+def voter_downVote(request):
 
     if request.method == 'POST':
         songId = request.POST['songId']
-    vote(request, songId, -1)
+        vote(request, songId, -1)
 
     return voter_update(request)
 
@@ -164,7 +116,7 @@ def voter_update(request):
 
     result = {'current':None, 'queue': []}
     current = Song.objects.filter(queue=0, account=account)
-    result['current'].append(model_to_dict(current))
+    result['current'] = model_to_dict(current)
 
     queue = Song.objects.filter(account=account).exclude(queue=0).order_by('-queue')[:15]
     for song in queue:

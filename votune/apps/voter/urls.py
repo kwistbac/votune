@@ -8,10 +8,6 @@ urlpatterns = patterns('',
                        (r'^upvote/', voter_upVote),
                        (r'^downvote/', voter_downVote),
                        (r'^songs/$', voter_listSongs),
-                       (r'^songs/popular/$', voter_listPopularSongs),
-                       (r'^about/$', voter_about),
-                       (r'^help/$', voter_help),
-                       (r'^suggest/$', voter_suggest),
                        (r'^update/$', voter_update),
 
 
