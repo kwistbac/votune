@@ -2,11 +2,11 @@ $(document).ready(function()
 {
     $('ul.messages').fadeOut(2000);
     update()
-    setInterval(update, 5000);
+//     setInterval(update, 5000);
 
     function update()
     {
-        $.getJSON("voter/update", updateNowPlaying);
+        $.getJSON("/voter/update", updateNowPlaying);
     }
 
     function updateNowPlaying(data)
@@ -58,7 +58,7 @@ $(document).ready(function()
 
             $('<span>').attr('title', 'Number of votes')
                 .addClass('badge')
-                .html((song.queue < 0) ? 'Random' : song.queue + ' ' + ((song.queue > 1) ? 'votes' : 'vote'))
+                .html((song.queue < 0) ? '' : song.queue + ' ' + ((song.queue > 1) ? 'votes' : 'vote'))
                 .appendTo(listItem);
 
 
@@ -77,7 +77,7 @@ $(document).ready(function()
         jQuery.ajax(
         {
             'type': 'POST',
-            'url': 'voter/upvote/',
+            'url': '/voter/upvote/',
             'data': { 'songId': $(this).attr('id')},
             'dataType': 'json',
             'success': updateQueue
@@ -90,7 +90,7 @@ $(document).ready(function()
         jQuery.ajax(
         {
             'type': 'POST',
-            'url': 'voter/downvote/',
+            'url': '/voter/downvote/',
             'data': { 'songId': $(this).attr('id')},
             'dataType': 'json',
             'success': updateQueue

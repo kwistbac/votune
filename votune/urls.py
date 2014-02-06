@@ -5,12 +5,13 @@ from django.contrib import admin
 from votune import settings
 
 admin.autodiscover()
+from votune.apps.voter.views import main_index
 from votune.apps.establishment import views
 from votune import settings
 
 urlpatterns = patterns('',
 
-                       url(r'^(?P<hashCode>[a-z0-9]{8})$', include('votune.apps.voter.urls')),
+                       url(r'^(?P<hashCode>[a-z0-9]{8})$', main_index),
 
                        url(r'^voter/', include('votune.apps.voter.urls')),
 

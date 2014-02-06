@@ -1,11 +1,11 @@
 from xmlrpclib import DateTime
 import datetime
 from django.db import models
-from django.contrib.auth.models import User
+from votune.models import Account
 
 
 class QrCode(models.Model):
-    account = models.OneToOneField(User)
+    account = models.OneToOneField(Account)
     createdOn = models.DateTimeField(default=datetime.datetime.now())
     startedOn = models.DateTimeField()
     expiredOn = models.DateTimeField()

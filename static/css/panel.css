@@ -19,9 +19,9 @@ i[class^="fa-"],
 i[class^="fa-"] { font-style:normal; }
 
 html, body { background:#ecf0f1; }
-header { background: orange; height: 4em; padding: 10px; border-bottom: 1px solid gray; }
+header { background: white; height: 35px; padding: 2px; border-bottom: 1px solid #cacaca; }
 footer { color:white; }
-h1 { margin:0 0 0 15px; color:#428bca; }
+h1 { margin:0 0 0 15px; color:#58B7CC; font-weight:900; font-size:30px; line-height:32px; }
 
 ul.messages li { list-style-type: none; }
 ul.messages li.info { color: #ffffff; background-color: green; display: inline-block; }

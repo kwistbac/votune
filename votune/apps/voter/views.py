@@ -32,11 +32,10 @@ def main_index(request, hashCode):
 
 def voter_index(request,accountId):
 
-    try:
-        request.session['account_id'] = accountId
-    except:
-        return HttpResponseNotFound()
-
+    #try:
+    request.session['account_id'] = accountId
+    #except:
+        #return HttpResponseNotFound()
     return render_to_response('voter/index.html',{}, context_instance=RequestContext(request))
 
 
@@ -67,7 +66,7 @@ def voter_upVote(request):
     if request.method == 'POST':
         songId = request.POST['songId']
         vote(request, songId, 1)
-
+        
     return voter_update(request)
 
 
@@ -81,7 +80,7 @@ def voter_downVote(request):
 
 def vote(request,songId,amount):
 
-    try:
+    #try:
         song = Song.objects.get(id=songId)
 
         if song.queue < 0 and amount > 0:
@@ -102,20 +101,19 @@ def vote(request,songId,amount):
         song.save()
         vote.save()
 
-    except:
-        return HttpResponseForbidden()
+    #except:
+        #return HttpResponseForbidden()
 
 
 def voter_update(request):
 
     try:
-        accountId = request.session['account_id']
-        account = Account.objects.get(user_id = accountId)
+        account = Account.objects.get(id = request.session['account_id'])
     except:
         return HttpResponseNotFound()
 
     result = {'current':None, 'queue': []}
-    current = Song.objects.filter(queue=0, account=account)
+    current = Song.objects.get(queue=0, account=account)
     result['current'] = model_to_dict(current)
 
     queue = Song.objects.filter(account=account).exclude(queue=0).order_by('-queue')[:15]
