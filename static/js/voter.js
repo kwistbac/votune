@@ -35,31 +35,33 @@ $(document).ready(function()
 
             var listItem = $('<li>').addClass('list-group-item');
 
-            $('<span>').html(song.title + ' - ' + song.artist)
+            $('<button>')
+            .addClass('btn btn-success btn-style')
+            .addClass('upvote-button')
+            .addClass('pull-right')
+            .html('<span class="glyphicon glyphicon-plus"></span>')
+            .attr({ type: 'button', id: song.id , value:'upvote'})
+            .appendTo(listItem)
+            
+            $('<button>')
+            .addClass('btn btn-danger btn-style')
+            .addClass('downvote-button')
+            .addClass('pull-right')
+            .html('<span class="glyphicon glyphicon-minus"></span>')
+            .attr({ type: 'button', id: song.id , value:'downvote'})
+            .appendTo(listItem)
+
+            $('<span>').attr('title', 'Number of votes')
+            .addClass('badge')
+            .html((song.queue < 0) ? '' : song.queue + ' ' + ((song.queue > 1) ? 'votes' : 'vote'))
+            .appendTo(listItem);
+            
+            $('<span>').html('<div>' + song.title + '</div><div>' + song.artist + '</div>')
                 .addClass('title')
                 .appendTo(listItem);
 
-            $('<button>')
-                 .addClass('btn btn-success btn-style')
-                 .addClass('upvote-button')
-                 .addClass('pull-right')
-                 .html('<span class="glyphicon glyphicon-plus"></span>')
-                 .attr({ type: 'button', id: song.id , value:'upvote'})
-                 .appendTo(listItem)
-
-             $('<button>')
-                 .addClass('btn btn-danger btn-style')
-                 .addClass('downvote-button')
-                 .addClass('pull-right')
-                 .html('<span class="glyphicon glyphicon-minus"></span>')
-                 .attr({ type: 'button', id: song.id , value:'downvote'})
-                 .appendTo(listItem)
 
 
-            $('<span>').attr('title', 'Number of votes')
-                .addClass('badge')
-                .html((song.queue < 0) ? '' : song.queue + ' ' + ((song.queue > 1) ? 'votes' : 'vote'))
-                .appendTo(listItem);
 
 
             queue.append(listItem)
