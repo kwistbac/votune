@@ -6,7 +6,7 @@ $(document).ready(function()
 
     function update()
     {
-        $.getJSON("update", updateNowPlaying);
+        $.getJSON("voter/update", updateNowPlaying);
     }
 
     function updateNowPlaying(data)
@@ -77,7 +77,7 @@ $(document).ready(function()
         jQuery.ajax(
         {
             'type': 'POST',
-            'url': 'upvote/',
+            'url': 'voter/upvote/',
             'data': { 'songId': $(this).attr('id')},
             'dataType': 'json',
             'success': updateQueue
@@ -90,7 +90,7 @@ $(document).ready(function()
         jQuery.ajax(
         {
             'type': 'POST',
-            'url': 'downvote/',
+            'url': 'voter/downvote/',
             'data': { 'songId': $(this).attr('id')},
             'dataType': 'json',
             'success': updateQueue
