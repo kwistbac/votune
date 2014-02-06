@@ -10,6 +10,7 @@
                     <tr>
                         <th>Title</th>
                         <th>Artist</th>
+                        <th>Source</th>
                         <th style="text-align:right;width:80px;">
                             <a id="libraryAdd" href="{% url 'library-add' %}" class="btn btn-sm btn-success"><i class="fa-plus"></i> Add</a>
                         </th>
@@ -22,6 +23,7 @@
                             <a id="libraryEdit" href="{% url 'library-edit' song.id %}">{{ song.title }}</a>
                         </td>
                         <td>{{ song.artist }}</td>
+                        <td>{% if song.source == 1 %} Spotify {% else %} Local {% endif %}</td>
                         <td style="text-align:right;">
                             <a id="libraryRemove" href="{% url 'library-remove' song.id %}" class="btn btn-xs btn-danger" ><i class="fa-minus"></i></a>
                         </td>

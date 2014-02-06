@@ -12,7 +12,7 @@ $(function () {
                 .appendTo(item);
             $('<span>').attr('title', 'Number of votes')
                 .addClass('badge')
-                .html((song.queue < 0) ? 'Random' : song.queue + ' ' + ((song.queue > 1) ? 'votes' : 'vote'))
+                .html((song.queue < 0) ? '' : song.queue + ' ' + ((song.queue > 1) ? 'votes' : 'vote'))
                 .appendTo(item);
             queue.append(item)
         });
@@ -37,7 +37,7 @@ $(function () {
         }
         else {
             var icon = $('<span>').addClass('glyphicon glyphicon-music');
-            $('#playerImage').empty().append(icon);
+            $('#songImage').empty().append(icon);
         }
 
         return updatePlayerQueue(data);
@@ -65,21 +65,21 @@ $(function () {
     setInterval(updatePlayer, 1000);
 
     $(document).on('submit', ".modal form", function (e) {
-        e.preventDefault();
+            e.preventDefault();
 
-        var form = $(this);
-        var modal = form.closest('.modal');
+            var form = $(this);
+            var modal = form.closest('.modal');
 
-        form.append('<input type="hidden" name="ok" value="1">');
-        var values = (form.attr('method') && form.attr('method').toUpperCase() == 'POST' ? form.serializeArray() : form.serialize());
+            form.append('<input type="hidden" name="ok" value="1">');
+            var values = (form.attr('method') && form.attr('method').toUpperCase() == 'POST' ? form.serializeArray() : form.serialize());
 
-        modal.load(form.attr('action'), values, function (data, textStatus, xhr) {
-            if (!data)
-                modal.modal('hide');
-            else
-                $(this).trigger('loaded.bs.modal');
-        });
-    })
+            modal.load(form.attr('action'), values, function (data, textStatus, xhr) {
+                if (!data)
+                    modal.modal('hide');
+                else
+                    $(this).trigger('loaded.bs.modal');
+            });
+        })
         .on('click', "#library", function (e) {
             e.preventDefault();
 

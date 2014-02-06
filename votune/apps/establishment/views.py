@@ -13,7 +13,9 @@ from votune.models import Account
 
 @login_required
 def index(request):
-    return render_to_response('establishment/index.html', context_instance=RequestContext(request))
+    return render_to_response('establishment/index.html', 
+                              {'user': request.user},
+                              context_instance=RequestContext(request))
 
 
 def login(request):
