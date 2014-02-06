@@ -1,10 +1,39 @@
-{% extends 'voter/base.html' %}
-{% block title %} votune - Voter - Home {% endblock %}
-{% block content %}
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
 
-    <!-- styling++ still -->
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta name="viewport" content="width=device-width" />
+		<meta name="generator" content="votune" />
 
-       <div id="mJukeList" class="row">
+		<link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css" />
+		<link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/font-awesome/4.0.2/css/font-awesome.min.css" />
+		<link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/file-uploader/3.7.0/fineuploader.min.css" />
+        <link rel="stylesheet" type="text/css" href="{% static "css/voter.css" %}"/>
+
+		<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+		<script type="text/javascript" src="//netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/file-uploader/3.7.0/fineuploader-jquery.min.js"></script>
+        <script type="text/javascript" src="{% static "js/csfr.js" %}"></script>
+        <script type="text/javascript" src="{% static "js/voter.js" %}"></script>
+
+
+</head>
+<body>
+
+    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+
+      <div class="container">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#">votune</a>
+        </div>
+      </div>
+    </div>
+
+
+    <div id="votuneList" class="row">
 
         <div id="nowplaying"></div>
         <ul id="queue" class="list-group">
@@ -12,4 +41,16 @@
         </ul>
     </div>
 
-{% endblock %}
+    <div class="navbar navbar-default navbar-fixed-bottom">
+       <form action="/songs/" method="post" id="SearchForm" class="navbar-form" role="search">
+           {% csrf_token %}
+        <div class="input-group">
+            <input type="text" class="form-control" placeholder="Search" name="srch-query" id="srch-query">
+            <div class="input-group-btn">
+                <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+            </div>
+        </div>
+        </form>
+    </div>
+</body>
+</html>

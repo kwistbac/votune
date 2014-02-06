@@ -1,0 +1,18 @@
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h4 class="modal-title">Search results</h4>
+        </div>
+        <div class="modal-body">
+                <ul id="resultList" class="list-group">
+
+
+                    {% for song in object_list %}
+                       <li class="list-group-item">{{ song.artist }} - {{ song.title }}</li>
+                    {% endfor %}
+                </ul>
+        </div>
+
+    </div>
+</div>
