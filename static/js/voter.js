@@ -97,43 +97,25 @@ $(document).ready(function()
         });
      });
 
-    $(document).on('click', ".downvote-button", function (e) {
+    $(document).on('submit', "#SearchForm", function (e) {
         e.preventDefault();
 
-        jQuery.ajax(
-        {
-            'type': 'POST',
-            'url': 'downvote/',
-            'data': { 'songId': $(this).attr('id')},
-            'dataType': 'json',
-            'success': updateQueue
-        });
-     });
-
-     $('#SearchForm').submit(function() {
-        jQuery.ajax(
-        {
-            type: $(this).attr('method'),
-            'url': $(this).attr('action'),
-            'data': $(this).serialize(),
-            'success': showResults
-        });
-
-     });
-
-    function showResults(data)
-    {
-
-        var modal = $('<div>').attr('id', 'searchResultModal')
+            var modal = $('<div>').attr('id', 'resultsModal')
                 .addClass('modal')
                 .addClass('fade');
 
-        modal.on('hidden.bs.modal', function () {
-             $(this).remove();
+            var form = $(this);
+            var values = (form.attr('method') && form.attr('method').toUpperCase() == 'POST' ? form.serializeArray() : form.serialize());
+
+            modal.on('hidden.bs.modal', function () {
+                $(this).remove();
+            })
+                .modal()
+                .load(form.attr('action'), values, function (data, textStatus, xhr) {
+                    $(this).trigger('loaded.bs.modal');
+                });
+
         })
-        .modal()
-        data.trigger('loaded.bs.modal');
 
 
-    }
 });
