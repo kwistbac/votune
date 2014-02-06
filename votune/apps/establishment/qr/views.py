@@ -32,6 +32,7 @@ class qrCodeCreationForm(ModelForm):
 def generateQR(request):
     form = qrCodeCreationForm()
     hasCode = hashlib.sha1(str(time.time())).hexdigest()[:8]
+    url = "http://" + request.get_host()
     userHasQrCode = False
     userQR = None
 
@@ -71,7 +72,8 @@ def generateQR(request):
                 box_size=5,
                 border=4,
             )
-            qr.add_data("http://127.0.0.1:8000/" + hasCode)
+            
+            qr.add_data(url + "/" + hasCode)
             qr.make(fit=True)
             img = qr.make_image()
             imagePath = os.path.abspath(
@@ -82,7 +84,8 @@ def generateQR(request):
                 return HttpResponse(status=201)
 
     return render_to_response("establishment/qr/qr.html",
-                              {'form': form,
+                              {'url': url + "/" + hasCode,
+                               'form': form,
                                'userHasCode': userHasQrCode,
                                'usrQr': userQR},
                               context_instance=RequestContext(request))
