@@ -38,7 +38,7 @@ class Song(models.Model):
     modified = models.DateTimeField(auto_now=True)
     
     class Meta:
-        unique_together = ("account", "checksum")
+        unique_together = ("account", "hash")
 
 class Vote(models.Model):
     account = models.ForeignKey(Account)
