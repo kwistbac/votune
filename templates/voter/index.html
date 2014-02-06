@@ -27,20 +27,19 @@
 
       <div class="container">
         <div class="navbar-header">
-          <a class="navbar-brand" href="#">votune</a>
+            <h1><span>VO</span>TUNE</h1>
+          <!--<a class="navbar-brand" href="#">votune</a>-->
         </div>
       </div>
     </div>
 
-
-    <div id="votuneList" class="row">
-
+    <div class="container">
         <div id="nowplaying"></div>
         <ul id="queue" class="list-group">
-                    <li class="list-group-item">list is empty</li>
+            <li class="list-group-item">list is empty</li>
         </ul>
     </div>
-
+    
     <div class="navbar navbar-default navbar-fixed-bottom">
        <form action="/songs/" method="post" id="SearchForm" class="navbar-form" role="search">
            {% csrf_token %}

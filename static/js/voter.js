@@ -2,7 +2,7 @@ $(document).ready(function()
 {
     $('ul.messages').fadeOut(2000);
     update()
-//     setInterval(update, 5000);
+    setInterval(update, 5000);
 
     function update()
     {
@@ -16,7 +16,7 @@ $(document).ready(function()
 
         var nowPlaying = $('#nowplaying');
         nowPlaying.empty()
-        $('<span>').html('Now playing:' + data.current.title + ' - ' + data.current.artist)
+        $('<span>').html('Now playing: ' + data.current.title + ' - ' + data.current.artist)
                 .addClass('title')
         .appendTo(nowPlaying);
 
