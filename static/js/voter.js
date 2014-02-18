@@ -102,22 +102,20 @@ $(document).ready(function()
     $(document).on('submit', "#SearchForm", function (e) {
         e.preventDefault();
 
-            var modal = $('<div>').attr('id', 'resultsModal')
-                .addClass('modal')
-                .addClass('fade');
-
             var form = $(this);
             var values = (form.attr('method') && form.attr('method').toUpperCase() == 'POST' ? form.serializeArray() : form.serialize());
 
-            modal.on('hidden.bs.modal', function () {
-                $(this).remove();
-            })
-                .modal()
-                .load(form.attr('action'), values, function (data, textStatus, xhr) {
-                    $(this).trigger('loaded.bs.modal');
-                });
-
+             $('searchResult').load(form.attr('action'), values, function (data, textStatus, xhr) {});
+             $('container').attr({display:none});
         })
+
+    $(document).on('click', ".close-searchResults", function (e) {
+        e.preventDefault();
+
+        $('searchResults').empty();
+        $('container').attr({display:inline})
+
+     });
 
 
 });
