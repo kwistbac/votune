@@ -13,6 +13,12 @@ from votune.models import Account
 
 @login_required
 def index(request):
+    try:
+        account = Account.objects.get(user_id=request.user.id)
+    except:
+        account = Account(user_id=request.user.id)
+        account.save()
+    
     return render_to_response('establishment/index.html', 
                               {'user': request.user},
                               context_instance=RequestContext(request))
