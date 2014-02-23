@@ -8,7 +8,7 @@ from spotify_web.friendly import Spotify
 sessions = {}
 
 
-def get_or_create_session(username, password, force_create = True):
+def get_or_create_session(username, password, force_create = False):
     if username in sessions:
         # Avoid hammering with invalid login attempts (results in temporary lock out)
         if sessions[username]['current'] == False and sessions[username]['password'] == password:
@@ -16,10 +16,11 @@ def get_or_create_session(username, password, force_create = True):
             return False
         if force_create or sessions[username]['current'] and not sessions[username]['current'].logged_in():
             print time.strftime("%d.%m.%Y %H:%M:%S") + " [" + username + "] Session destroyed"
-            sessions[username]['current'].logout()
+            if sessions[username]['current']:
+                sessions[username]['current'].logout()
             sessions[username]['current'] = None
-    
-    if not username in sessions or sessions[username]['current'] == None:    
+        
+    if username not in sessions or sessions[username]['current'] == None:    
         spotify = Spotify(username, password)
         if not spotify.logged_in():
             print time.strftime("%d.%m.%Y %H:%M:%S") + " [" + username + "] Login failed"
@@ -43,7 +44,7 @@ class SpotifyURIHandler(object):
         if uri is None or username is None or password is None:
             raise cherrypy.HTTPError(400, "A paramater was expected but not supplied.")
 
-        spotify = get_or_create_session(username, password)
+        spotify = get_or_create_session(username, password, True)
         if not spotify:
             raise cherrypy.HTTPError(403, "Username or password given were incorrect.")
         track = spotify.objectFromURI(uri)
