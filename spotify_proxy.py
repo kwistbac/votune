@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-import sys, cherrypy, time
+import sys, cherrypy, time, json
 sys.path.append("spotify-websocket-api")
 from spotify_web.friendly import Spotify
 
@@ -8,35 +8,34 @@ from spotify_web.friendly import Spotify
 sessions = {}
 
 
-def get_or_create_session(username, password):
+def get_or_create_session(username, password, force_create = True):
     if username in sessions:
-        print time.strftime("%d.%m.%Y %H:%M:%S") + " [" + username + "] Session destroyed"
-        sessions[username].logout()
-        
-    spotify = Spotify(username, password)
-    if not spotify:
-        print "[" + username + "] Login failed"
-        return False
-    else:
-        print time.strftime("%d.%m.%Y %H:%M:%S") + " [" + username + "] Session created"
-        sessions[username] = spotify
+        # Avoid hammering with invalid login attempts (results in temporary lock out)
+        if sessions[username]['current'] == False and sessions[username]['password'] == password:
+            print time.strftime("%d.%m.%Y %H:%M:%S") + " [" + username + "] Login failed (cached)"
+            return False
+        if force_create or sessions[username]['current'] and not sessions[username]['current'].logged_in():
+            print time.strftime("%d.%m.%Y %H:%M:%S") + " [" + username + "] Session destroyed"
+            sessions[username]['current'].logout()
+            sessions[username]['current'] = None
     
-    #if username not in sessions:
-        #spotify = Spotify(username, password)
-
-        #if not spotify:
-            #print "[" + username + "] Login failed"
-            #return False
-        #else:
-            #print "[" + username + "] Session created"
-            #sessions[username] = spotify
-    return sessions[username]
+    if not username in sessions or sessions[username]['current'] == None:    
+        spotify = Spotify(username, password)
+        if not spotify.logged_in():
+            print time.strftime("%d.%m.%Y %H:%M:%S") + " [" + username + "] Login failed"
+            sessions[username] = { 'current':False, 'password':password }
+            return False
+    
+        print time.strftime("%d.%m.%Y %H:%M:%S") + " [" + username + "] Session created"
+        sessions[username] = { 'current':spotify, 'password':password }
+    
+    return sessions[username]['current']
 
 
 def disconnect_sessions():
     for username, session in sessions.items():
         print time.strftime("%d.%m.%Y %H:%M:%S") + " [" + username + "] Session destroyed"
-        session.logout()
+        session['current'].logout()
 
 
 class SpotifyURIHandler(object):
@@ -47,41 +46,42 @@ class SpotifyURIHandler(object):
         spotify = get_or_create_session(username, password)
         if not spotify:
             raise cherrypy.HTTPError(403, "Username or password given were incorrect.")
-
         track = spotify.objectFromURI(uri)
+            
         if track is None:
             print time.strftime("%d.%m.%Y %H:%M:%S") + " [" + username + "] Not found: " + uri
             raise cherrypy.HTTPError(404, "Could not find a track with that URI.")
 
-        if action == "proxymp3":
-            url = track.getFileURL()
-            if not url:
+        if action == "track":
+            result = {'url':track.getFileURL(), 'image':None}
+            
+            if not result['url']:
                 print time.strftime("%d.%m.%Y %H:%M:%S") + " [" + username + "] Failed to fetch track URL: " + uri
-                disconnect_sessions()
                 raise cherrypy.HTTPError(404, "Could not find a track URL for that URI.")
             
             covers = track.getAlbum().getCovers()
             if "300" in covers:
-                url = url + "|" + covers["300"]
+                result['image'] = covers["300"]
             elif "600" in covers:
-                url = url + "|" + covers["600"]
+                result['image'] = covers["600"]
             elif "120" in covers:
-                url = url + "|" + covers["120"]
+                result['image'] = covers["120"]
             
             print time.strftime("%d.%m.%Y %H:%M:%S") + " [" + username + "] Fetch track URL: " + uri
-        elif action == "proxymeta":
-            url = track.getFileURL()
-            if not url:
+        elif action == "meta":
+            result = {'title':track.getName(), 'artist':track.getArtists(True), 'length':track.getDuration()/1000, 'album':track.getAlbum(True), 'track':track.getNumber()}
+            
+            if not result['title']:
                 print time.strftime("%d.%m.%Y %H:%M:%S") + " [" + username + "] Failed to fetch track metadata: " + uri
                 raise cherrypy.HTTPError(404, "Could not find metadata for that URI.")
-            
+                
             print time.strftime("%d.%m.%Y %H:%M:%S") + " [" + username + "] Fetch track metadata: " + uri
         else:
             raise cherrypy.HTTPError(400, "An invalid action was requested.")
 
         #print time.strftime("%d.%m.%Y %H:%M:%S") + " [" + username + "] Result: " + url
         
-        return url
+        return json.dumps(result)
 
     default.exposed = True
 

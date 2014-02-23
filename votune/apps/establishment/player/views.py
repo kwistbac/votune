@@ -2,19 +2,22 @@ from django.shortcuts import render_to_response, render
 from django.template import Context, RequestContext
 from django.http import HttpResponse, HttpResponseRedirect, HttpResponseNotFound
 from django.forms.models import model_to_dict
-from django.core.exceptions import ObjectDoesNotExist
+from django.core.exceptions import ObjectDoesNotExist, MultipleObjectsReturned
 from django.contrib.auth.decorators import login_required
 
 from votune.models import Song, Account
 from votune import settings
 
-import requests
-import json
-import os
+import os, json, requests
 
 def get_current_song(account):
     try:
         current = Song.objects.get(queue = 0, account = account)
+    except MultipleObjectsReturned:
+        invalid = Song.objects.filter(account = account).exclude(queue = None)[1:]
+        for song in invalid:
+            song.queue = None
+            song.save()
     except ObjectDoesNotExist:
         current = Song.objects.filter(account = account).exclude(queue = None).order_by('-queue').first()
         if current != None:
@@ -87,20 +90,16 @@ def current(request):
     
     current = get_current_song(account)
     if current != None:
-        result['current'] = model_to_dict(current)
-        
         if current.source == Song.SOURCE_SPOTIFY:
-            if len(account.spotify_username) == 0 or len(account.spotify_password) == 0:
-                return next(request)
-            query = {'uri': 'spotify:track:' + current.hash, 'username': account.spotify_username, 'password': account.spotify_password}
-            try:
-                url = requests.get("http://localhost:8080/", params=query)
-            except:
-                return next(request)
-            urls = url.text.split("|")
-            result['current']['url'] = urls[0]
-            if len(urls) > 1:
-                result['current']['image'] = urls[1]
+            if len(account.spotify_username) != 0 and len(account.spotify_password) != 0:
+                query = {'action':'track', 'uri':'spotify:track:' + current.hash, 'username':account.spotify_username, 'password':account.spotify_password}
+                try:
+                    track = json.loads(requests.get("http://localhost:8080/", params=query).text)
+                    result['current'] = model_to_dict(current)
+                    result['current']['url'] = track['url']
+                    result['current']['image'] = track['image']
+                except:
+                    pass
         else:
             result['current']['url'] = settings.MEDIA_URL + "library/" + str(account.id) + "/" + str(current.id) + ".mp3"
             imagePath = "library/" + str(account.id) + "/" + str(current.id) + ".jpg"

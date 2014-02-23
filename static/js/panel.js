@@ -20,26 +20,38 @@ $(function () {
         return true;
     }
 
-    function updatePlayerSong(data) {
-        if (!data.current)
-            return false;
-
+    function updatePlayerSong(data) 
+    {
         var player = $('#player').get(0);
-        player.src = data.current.url;
-        player.play();
-
-        $('#songTitle').html(data.current.title);
-        $('#songArtist').html(data.current.artist);
-        $('#songAlbum').html(data.current.album);
-        if (data.current.image) {
-            var img = $('<img>').attr('src', data.current.image);
-            $('#songImage').empty().append(img);
+        
+        if(!data.current)
+        {
+            if(player.src)
+            {
+                player.src = '';
+                $('#songTitle').empty();
+                $('#songArtist').empty();
+                $('#songAlbum').empty();
+                $('#songImage').empty();
+            }
         }
-        else {
-            var icon = $('<span>').addClass('glyphicon glyphicon-music');
-            $('#songImage').empty().append(icon);
-        }
+        else
+        {
+            player.src = data.current.url;
+            player.play();
 
+            $('#songTitle').html(data.current.title);
+            $('#songArtist').html(data.current.artist);
+            $('#songAlbum').html(data.current.album);
+            if (data.current.image) {
+                var img = $('<img>').attr('src', data.current.image);
+                $('#songImage').empty().append(img);
+            }
+            else {
+                var icon = $('<span>').addClass('glyphicon glyphicon-music');
+                $('#songImage').empty().append(icon);
+            }
+        }
         return updatePlayerQueue(data);
     }
 
@@ -137,6 +149,28 @@ $(function () {
                 });
 
         })
+        .on('click', "#libraryAddSpotify", function (e) {
+            e.preventDefault();
+            
+            var modal = $('<div>').attr('id', 'libraryAddSpotifyModal')
+            .addClass('modal')
+            .addClass('fade');
+            
+            modal.on('hidden.bs.modal', function () {
+                $('#libraryModal').load('/establishment/library/', function () {
+                    $(this).trigger('loaded.bs.modal');
+                });
+                $(this).remove();
+            })
+            .on('click', '#libraryAddSpotifySave', function () {
+                modal.find('form:first').submit();
+            })
+            .modal()
+            .load($(this).attr('href'), function () {
+                $(this).trigger('loaded.bs.modal');
+            });
+            
+        })        
         .on('click', "#libraryEdit", function (e) {
             e.preventDefault();
 

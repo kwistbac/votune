@@ -12,7 +12,20 @@
                         <th>Artist</th>
                         <th>Source</th>
                         <th style="text-align:right;width:80px;">
-                            <a id="libraryAdd" href="{% url 'library-add' %}" class="btn btn-sm btn-success"><i class="fa-plus"></i> Add</a>
+                            {% if account.spotify_username and account.spotify_username %}
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-sm btn-success dropdown-toggle" data-toggle="dropdown">
+                                    <i class="fa-plus"></i> Add
+                                    <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu pull-right text-left" role="menu">
+                                    <li><a id="libraryAdd" href="{% url 'library-add' %}"><i class="fa-plus"></i> Add MP3 files</a></li>
+                                    <li><a id="libraryAddSpotify" href="{% url 'library-add-spotify' %}"><i class="fa-plus"></i> Add Spotify track</a></li>
+                                </ul>
+                            </div>
+                            {% else %}
+                            <a class="btn btn-sm btn-success" id="libraryAdd" href="{% url 'library-add' %}"><i class="fa-plus"></i> Add</a>
+                            {% endif %}
                         </th>
                     </tr>
                 </thead>

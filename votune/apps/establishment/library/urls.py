@@ -8,6 +8,8 @@ urlpatterns = patterns('',
 
                        url(r'^add$', views.add, name='library-add'),
 
+                       url(r'^addSpotify$', views.addSpotify, name='library-add-spotify'),
+
                        url(r'^edit/(?P<id>\d+)$', views.edit, name='library-edit'),
 
                        url(r'^remove/(?P<id>\d+)$', views.remove, name='library-remove'),

@@ -11,8 +11,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.forms import ModelForm
 from django.utils import timezone
 
-from votune.models import Song
-from votune.models import Account
+from votune.models import Song, Account
 
 from votune import settings
 from votune.libs.file_uploader import qqFileUploader
@@ -20,9 +19,7 @@ from votune.libs.file_uploader import qqFileUploader
 from mutagen.easyid3 import EasyID3
 from mutagen.mp3 import MP3
 
-import os
-import shutil
-import hashlib
+import os, shutil, hashlib, json, requests
 
 
 class LibraryListView(ListView):
@@ -50,6 +47,13 @@ class LibraryListView(ListView):
     def get_context_data(self, **kwargs):
         context = super(LibraryListView, self).get_context_data(**kwargs)
         context['now'] = timezone.now()
+        
+        try:
+            account = Account.objects.get(user_id = self.request.user.id)        
+            context['account'] = account
+        except:
+            pass
+        
         return context
 
 
@@ -63,6 +67,40 @@ class LibraryForm(ModelForm):
         for field in self.fields.values():
             field.widget.attrs['class'] = 'form-control'
 
+@login_required
+def addSpotify(request):
+    try:
+        account = Account.objects.get(user_id = request.user.id)
+    except:
+        return HttpResponseForbidden()
+    if len(account.spotify_username) == 0 or len(account.spotify_password) == 0:
+        return HttpResponseForbidden()
+
+    if 'ok' in request.POST and 'uri' in request.POST and request.POST['uri'].startswith('spotify:track:'):
+            
+        query = {'action':'meta', 'uri':request.POST['uri'], 'username':account.spotify_username, 'password':account.spotify_password}
+        try:
+            result = json.loads(requests.get("http://localhost:8080/", params=query).text)
+            
+            song = Song(account_id=account.id,
+                        source=Song.SOURCE_SPOTIFY,
+                        hash=request.POST['uri'].replace('spotify:track:', ''),
+                        title=result['title'],
+                        artist=result['artist'],
+                        length=result['length'],
+                        album=result['title'],
+                        track=int(result['track']) if 'track' in result and result['track'] else None,
+                        year=int(result['year']) if 'year' in result and result['year'] else None)
+            
+            song.full_clean()
+            song.save()
+                
+        except:
+            pass
+
+        return HttpResponse(status=201)
+
+    return render_to_response('establishment/library/addSpotify.html', {}, context_instance=RequestContext(request))
 
 @login_required
 def add(request):
@@ -81,6 +119,7 @@ def add(request):
             audio = MP3(uploadPath + file)
             comments = audio.tags.getall('COMM:')
             song = Song(account_id=account.id,
+                        source=Song.SOURCE_FILE,
                         hash=hashlib.md5(open(uploadPath + file, 'rb').read()).hexdigest(),
                         title=audio.tags['TIT2'].text[0] if 'TIT2' in audio.tags and audio.tags['TIT2'].text[0] else name[1],
                         artist=audio.tags['TPE1'].text[0] if 'TPE1' in audio.tags and audio.tags['TPE1'].text[0] else "Uknown artist",

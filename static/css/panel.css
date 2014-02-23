@@ -2,6 +2,7 @@
 {
     #libraryModal .modal-dialog { width: 600px; }
     #libraryAddModal .modal-dialog { width: 550px; }
+    #libraryAddSpotifyModal .modal-dialog { width: 550px; }
     #libraryEditModal .modal-dialog { width: 475px; }
     #libraryRemoveModal .modal-dialog { width: 450px; }
 	
