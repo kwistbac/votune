@@ -33,20 +33,19 @@
       </div>
     </div>
 
-    <div class="container">
+    <div class="container" id="voter-container">
         <div id="nowplaying"></div>
         <ul id="queue" class="list-group">
             <li class="list-group-item">list is empty</li>
         </ul>
     </div>
 
+    <div class="container">
     <div id="searchResults"></div>
-
-
     </div>
-    
+
     <div class="navbar navbar-default navbar-fixed-bottom">
-       <form action="/songs/" method="post" id="SearchForm" class="navbar-form" role="search">
+       <form action="songs/" method="post" id="SearchForm" class="navbar-form" role="search">
            {% csrf_token %}
         <div class="input-group">
             <input type="text" class="form-control" placeholder="Search" name="srch-query" id="srch-query">

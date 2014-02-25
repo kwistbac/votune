@@ -28,6 +28,8 @@ $(document).ready(function()
         if (!data.queue)
             return false;
 
+
+
         var queue = $('#queue');
 
         queue.data('ts', new Date().getTime()).empty();
@@ -36,15 +38,15 @@ $(document).ready(function()
             var listItem = $('<li>').addClass('list-group-item');
 
             $('<button>')
-            .addClass('btn btn-success btn-style')
+            .addClass('btn btn-success btn-style btn-lg')
             .addClass('upvote-button')
             .addClass('pull-right')
             .html('<span class="glyphicon glyphicon-plus"></span>')
             .attr({ type: 'button', id: song.id , value:'upvote'})
             .appendTo(listItem)
-            
+
             $('<button>')
-            .addClass('btn btn-danger btn-style')
+            .addClass('btn btn-danger btn-style btn-lg')
             .addClass('downvote-button')
             .addClass('pull-right')
             .html('<span class="glyphicon glyphicon-minus"></span>')
@@ -53,20 +55,14 @@ $(document).ready(function()
 
             $('<span>').attr('title', 'Number of votes')
             .addClass('badge')
-            .html((song.queue < 0) ? '' : song.queue + ' ' + ((song.queue > 1) ? 'votes' : 'vote'))
+            .html((song.queue <= 0) ? '' : song.queue + ' ' + ((song.queue > 1) ? 'votes' : 'vote'))
             .appendTo(listItem);
-            
+
             $('<span>').html('<div>' + song.title + '</div><div>' + song.artist + '</div>')
                 .addClass('title')
                 .appendTo(listItem);
 
-
-
-
-
             queue.append(listItem)
-
-
         });
 
         return true;
@@ -82,7 +78,11 @@ $(document).ready(function()
             'url': '/voter/upvote/',
             'data': { 'songId': $(this).attr('id')},
             'dataType': 'json',
-            'success': updateQueue
+            'success': function(data){
+                $('#searchResults').empty();
+                $('#voter-container').css('display', 'block');
+                updateQueue(data)
+            }
         });
      });
 
@@ -95,7 +95,11 @@ $(document).ready(function()
             'url': '/voter/downvote/',
             'data': { 'songId': $(this).attr('id')},
             'dataType': 'json',
-            'success': updateQueue
+            'success': function(data){
+                $('#searchResults').empty();
+                $('#voter-container').css('display', 'block');
+                updateQueue(data)
+            }
         });
      });
 
@@ -103,17 +107,25 @@ $(document).ready(function()
         e.preventDefault();
 
             var form = $(this);
-            var values = (form.attr('method') && form.attr('method').toUpperCase() == 'POST' ? form.serializeArray() : form.serialize());
 
-             $('searchResult').load(form.attr('action'), values, function (data, textStatus, xhr) {});
-             $('container').attr({display:none});
-        })
+            $.ajax({
+                type: 'POST',
+                data: form.serialize(),
+                url: form.attr('action'),
+                success: function(data) {
+                    $('#searchResults').html(data);
+                    $('#voter-container').css('display', 'none');
 
-    $(document).on('click', ".close-searchResults", function (e) {
+                }
+            });
+        });
+
+
+    $(document).on('click', "#close-searchResults", function (e) {
         e.preventDefault();
 
-        $('searchResults').empty();
-        $('container').attr({display:inline})
+        $('#searchResults').empty();
+        $('#voter-container').css('display', 'block');
 
      });
 
