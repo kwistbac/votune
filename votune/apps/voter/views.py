@@ -57,7 +57,7 @@ def voter_listSongs(request):
         songList = Song.objects.filter(account = account)
 
 
-    return render_to_response("searchResults.html",{'object_list': songList,},context_instance=RequestContext(request))
+    return render_to_response("voter/voterSearch.html",{'object_list': songList,},context_instance=RequestContext(request))
 
 
 
