@@ -28,7 +28,8 @@
                 {% for usrQrCode in usrQr %}
                     <b>Previous QR code</b><br/>
                     <span>Expire date/time: {{ usrQrCode.expiredOn }}</span><br/>
-                    <span>Url: <a href="{{ url }}" target="blank">{{ url }}</a></span>
+                    <span>Url: <a href="{{ root_url }}{{ usrQrCode.hasCode }}" target="blank">
+                        {{ root_url }}{{ usrQrCode.hasCode }}</a></span>
                     <img src="/media/qrCodes/{{ account.id }}_{{ usrQrCode.hasCode }}.jpg">
                 {% endfor %}
             {% endif %}
