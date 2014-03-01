@@ -32,10 +32,10 @@ class qrCodeCreationForm(ModelForm):
 @never_cache
 def generateQR(request):
     try:
-        account = Account.objects.get(user_id = request.user.id)
+        account = Account.objects.get(user_id=request.user.id)
     except:
-        return HttpResponseNotFound()    
-    
+        return HttpResponseNotFound()
+
     form = qrCodeCreationForm()
     hasCode = hashlib.sha1(str(time.time())).hexdigest()[:8]
     url = "http://" + request.get_host()
@@ -54,7 +54,8 @@ def generateQR(request):
             if userHasQrCode:
                 #delete previous qrCode
                 prevQr = QrCode.objects.get(account=account)
-                prevQrPath = os.path.abspath(os.path.realpath(settings.MEDIA_ROOT) + "/qrCodes/" + str(account.id) + "_" + prevQr.hasCode + ".jpg")
+                prevQrPath = os.path.abspath(os.path.realpath(settings.MEDIA_ROOT) + "/qrCodes/" + str(
+                    account.id) + "_" + prevQr.hasCode + ".jpg")
                 os.unlink(prevQrPath)
 
                 #create new qr image
@@ -78,7 +79,12 @@ def generateQR(request):
                 box_size=5,
                 border=4,
             )
-            
+
+            #lets create dir if not
+            qrImagesLocation = os.path.abspath(os.path.realpath(settings.MEDIA_ROOT) + "/qrCodes/")
+            if not os.path.exists(qrImagesLocation):
+                os.makedirs(qrImagesLocation)
+
             qr.add_data(url + "/" + hasCode)
             qr.make(fit=True)
             img = qr.make_image()
@@ -91,7 +97,7 @@ def generateQR(request):
 
     return render_to_response("establishment/qr/qr.html",
                               {'account': account,
-                               'url': url + "/" + hasCode,
+                               'root_url': "http://" + request.get_host() + "/",
                                'form': form,
                                'userHasCode': userHasQrCode,
                                'usrQr': userQR},
