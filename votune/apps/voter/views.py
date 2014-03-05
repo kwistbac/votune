@@ -16,8 +16,7 @@ from votune.SearchService import *
 import datetime
 from django.utils.timezone import utc
 import json
-from django.core.serializers.json import DjangoJSONEncoder
-from django.core import serializers
+from django.views.decorators.csrf import csrf_exempt
 
 
 def main_index(request, hashCode):
@@ -113,7 +112,7 @@ def vote(request,songId,amount):
     #except:
         #return HttpResponseForbidden()
 
-
+@csrf_exempt
 def voter_update(request):
 
     try:
