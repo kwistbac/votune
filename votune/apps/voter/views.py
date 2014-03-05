@@ -16,6 +16,8 @@ from votune.SearchService import *
 import datetime
 from django.utils.timezone import utc
 import json
+from django.core.serializers.json import DjangoJSONEncoder
+from django.core import serializers
 
 
 def main_index(request, hashCode):
@@ -32,11 +34,16 @@ def main_index(request, hashCode):
 
 def voter_index(request,accountId):
 
+    message = ''
+    if not 'votune_lvt' in request.session :
+        set_voter_cookie(request)
+        message = "Welcome to Votune. You will be eligible to vote in the next round. The next round will begin in approximately 3 minutes"
+
     #try:
     request.session['account_id'] = accountId
     #except:
         #return HttpResponseNotFound()
-    return render_to_response('voter/index.html',{}, context_instance=RequestContext(request))
+    return render_to_response('voter/index.html',{'message' : message}, context_instance=RequestContext(request))
 
 
 def voter_listSongs(request):
@@ -57,24 +64,26 @@ def voter_listSongs(request):
         songList = Song.objects.filter(account = account)
 
 
-    return render_to_response("voter/voterSearch.html",{'object_list': songList,},context_instance=RequestContext(request))
+    return render_to_response("voter/voterSearch.html",{'object_list': songList,'query': query, 'ableToVote': isAbleToVote(request) },context_instance=RequestContext(request))
 
 
 
 def voter_upVote(request):
 
-    if request.method == 'POST':
+    if request.method == 'POST' and isAbleToVote(request):
         songId = request.POST['songId']
         vote(request, songId, 1)
+        set_voter_cookie(request)
         
     return voter_update(request)
 
 
 def voter_downVote(request):
 
-    if request.method == 'POST':
+    if request.method == 'POST' and isAbleToVote(request):
         songId = request.POST['songId']
         vote(request, songId, -1)
+        set_voter_cookie(request)
 
     return voter_update(request)
 
@@ -112,12 +121,37 @@ def voter_update(request):
     except:
         return HttpResponseNotFound()
 
-    result = {'current':None, 'queue': []}
+    result = {'current':None, 'queue': [], 'ableToVote': None}
     current = Song.objects.get(queue=0, account=account)
     result['current'] = model_to_dict(current)
+
+    if isAbleToVote(request) :
+        result['ableToVote'] = True
+    else :
+        result['ableToVote'] = False
 
     queue = Song.objects.filter(account=account).exclude(queue=0).order_by('-queue')[:15]
     for song in queue:
         result['queue'].append(model_to_dict(song))
 
     return HttpResponse(json.dumps(result), content_type="application/json")
+
+def set_voter_cookie(request):
+
+    DateTime = datetime.datetime.now().strftime("%y-%m-%d-%H-%M-%S")
+    request.session['votune_lvt'] = DateTime
+
+def isAbleToVote(request):
+
+    if 'votune_lvt' in request.session :
+        LastVoted = datetime.datetime.strptime(request.session['votune_lvt'], "%y-%m-%d-%H-%M-%S")
+        TimeBetweenVotes = datetime.datetime.now() - LastVoted
+
+        if TimeBetweenVotes >= datetime.timedelta(seconds = 10) :
+            return True
+        else :
+            return False
+    else :
+        set_voter_cookie()
+        return False
+

@@ -26,14 +26,29 @@
     <div class="navbar navbar-default navbar-fixed-top" role="navigation">
 
       <div class="container">
+        <div id="vote-status-container">
+
+
+        </div>
+
         <div class="navbar-header">
             <h1><span>VO</span>TUNE</h1>
           <!--<a class="navbar-brand" href="#">votune</a>-->
         </div>
+
       </div>
     </div>
 
+
+
     <div class="container" id="voter-container">
+
+        <div id="messages">
+        {% if message %}
+            <div id="message-container"><h3>{{ message }}</h3></div>
+        {% endif %}
+        </div>
+
         <div id="nowplaying"></div>
         <ul id="queue" class="list-group">
             <li class="list-group-item">list is empty</li>

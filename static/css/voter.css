@@ -23,9 +23,11 @@ h1 span { color:#DB1920; }
 
 #resultList { margin-bottom:90px; }
 #resultList .downvote-button,
-#resultList .upvote-button { margin-top:9px; }
+#resultList .upvote-button { margin-top:4px; }
 #resultList .downvote-button { margin-right:10px; }
 #resultList .list-group-item { line-height:26px; padding:5px 10px 5px 10px; }
 
 .result-header-container { margin-bottom: 10px}
+
+#message-container {margin-top: 60px; margin-bottom: 100px;}
 

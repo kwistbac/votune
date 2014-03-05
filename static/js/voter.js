@@ -1,6 +1,6 @@
 $(document).ready(function()
 {
-    $('ul.messages').fadeOut(2000);
+    $('#messages').fadeOut(10000);
     update()
     setInterval(update, 5000);
 
@@ -32,6 +32,16 @@ $(document).ready(function()
 
         var queue = $('#queue');
 
+        var voteStatus = $('#vote-status-container');
+        voteStatus.empty()
+        $('<button>')
+            .prop('disabled',true)
+            .addClass('btn btn-lg pull-right')
+            .addClass((data.ableToVote == true) ? 'btn-success' : 'btn-danger')
+            .html((data.ableToVote == true)? '1 Vote' : '0 Votes')
+            .appendTo(voteStatus)
+
+
         queue.data('ts', new Date().getTime()).empty();
         $.each(data.queue, function (index, song) {
 
@@ -41,18 +51,20 @@ $(document).ready(function()
             .addClass('btn btn-success btn-style btn-lg')
             .addClass('upvote-button')
             .addClass('pull-right')
+            .prop('disabled',((data.ableToVote == false) ? true : false))
             .html('<span class="glyphicon glyphicon-plus"></span>')
             .attr({ type: 'button', id: song.id , value:'upvote'})
             .appendTo(listItem)
-
+            /*
             $('<button>')
             .addClass('btn btn-danger btn-style btn-lg')
             .addClass('downvote-button')
             .addClass('pull-right')
+            .prop('disabled',((data.ableToVote == false) ? true : false))
             .html('<span class="glyphicon glyphicon-minus"></span>')
             .attr({ type: 'button', id: song.id , value:'downvote'})
             .appendTo(listItem)
-
+            */
             $('<span>').attr('title', 'Number of votes')
             .addClass('badge')
             .html((song.queue <= 0) ? '' : song.queue + ' ' + ((song.queue > 1) ? 'votes' : 'vote'))
@@ -63,6 +75,10 @@ $(document).ready(function()
                 .appendTo(listItem);
 
             queue.append(listItem)
+
+
+
+
         });
 
         return true;
