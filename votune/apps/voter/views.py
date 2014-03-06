@@ -112,7 +112,6 @@ def vote(request,songId,amount):
     #except:
         #return HttpResponseForbidden()
 
-@csrf_exempt
 def voter_update(request):
 
     try:

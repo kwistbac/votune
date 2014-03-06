@@ -38,7 +38,7 @@ $(document).ready(function()
             .prop('disabled',true)
             .addClass('btn btn-lg pull-right')
             .addClass((data.ableToVote == true) ? 'btn-success' : 'btn-danger')
-            .html((data.ableToVote == true)? '1 Vote' : '0 Votes')
+            .html((data.ableToVote == true)? 'Votes left: 1' : 'Votes left: 0')
             .appendTo(voteStatus)
 
 
